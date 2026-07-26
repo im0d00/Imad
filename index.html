@@ -9,6 +9,7 @@
 <meta property="og:description" content="Cybersecurity student, SOC enthusiast, and network security researcher from Pakistan."/>
 <meta property="og:type" content="website"/>
 <meta name="theme-color" content="#00D4FF"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23050810'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%2300D4FF' stroke-width='2.5'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='26' fill='%2300D4FF'%3EA%3C/text%3E%3C/svg%3E"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -315,7 +316,119 @@ footer{border-top:1px solid var(--border);padding:3rem 0 1.5rem;position:relativ
 .ft-socs{display:flex;gap:0.55rem;}
 .ft-socs a{color:var(--muted);font-size:0.85rem;transition:var(--transition);}
 .ft-socs a:hover{color:var(--cyan);}
+
+/* ── SPECIALIZATIONS ─────────────────── */
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:1rem;}
+.spec-card{padding:1.35rem;text-align:center;cursor:default;}
+.spec-ic{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto .8rem;font-size:1.1rem;border:1px solid;transition:0.25s;}
+.spec-card:hover .spec-ic{transform:scale(1.1);}
+.s1{background:rgba(0,212,255,.07);border-color:rgba(0,212,255,.22);color:var(--cyan);}
+.s2{background:rgba(167,139,250,.07);border-color:rgba(167,139,250,.22);color:var(--violet2);}
+.s3{background:rgba(0,255,136,.06);border-color:rgba(0,255,136,.2);color:var(--green);}
+.s4{background:rgba(255,183,0,.06);border-color:rgba(255,183,0,.2);color:var(--amber);}
+.spec-name{font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:600;margin-bottom:.15rem;}
+.spec-lv{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;}
+.lv-l{color:var(--cyan);}.lv-s{color:var(--violet2);}.lv-e{color:var(--muted);}
+
+/* ── PLATFORMS ────────────────────────── */
+.plat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;}
+.plat-card{padding:1.4rem;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.plat-ic{width:58px;height:58px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.45rem;margin-bottom:.8rem;border:1px solid var(--border);transition:var(--transition);}
+.plat-card:hover .plat-ic{transform:scale(1.08);}
+.pi-htb{background:rgba(158,255,0,.07);color:#9EFF00;border-color:rgba(158,255,0,.18);}
+.pi-thm{background:rgba(200,50,50,.07);color:#E05050;border-color:rgba(200,50,50,.18);}
+.pi-ps{background:rgba(255,100,0,.07);color:#FF7733;border-color:rgba(255,100,0,.18);}
+.pi-cisco{background:rgba(30,100,200,.08);color:#4A9EFF;border-color:rgba(30,100,200,.18);}
+.pi-otw{background:rgba(167,139,250,.07);color:var(--violet2);border-color:rgba(167,139,250,.18);}
+.pi-pico{background:rgba(0,212,255,.06);color:var(--cyan);border-color:rgba(0,212,255,.18);}
+.pi-cd{background:rgba(0,255,136,.06);color:var(--green);border-color:rgba(0,255,136,.18);}
+.pi-ld{background:rgba(255,183,0,.06);color:var(--amber);border-color:rgba(255,183,0,.18);}
+.pi-bluecap{background:rgba(0,180,255,.08);color:#00B4FF;border-color:rgba(0,180,255,.18);}
+.plat-name{font-family:'Space Grotesk',sans-serif;font-size:.85rem;font-weight:600;margin-bottom:.15rem;}
+.plat-st{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.07em;margin-bottom:.5rem;}
+.st-active{color:var(--green);}.st-plan{color:var(--muted);}
+.plat-sub{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);}
+.plat-prog{width:100%;height:3px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden;margin-top:.6rem;}
+.pp{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--cyan),var(--violet));}
+
+/* ── ACHIEVEMENTS ─────────────────────── */
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;}
+.ach-card{padding:1.4rem;text-align:center;}
+.ach-ic{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin:0 auto .8rem;position:relative;}
+.ach-ic::before{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid;opacity:.28;}
+.ai-gold{background:rgba(255,183,0,.08);color:var(--amber);}
+.ai-gold::before{border-color:var(--amber);}
+.ai-cyan{background:rgba(0,212,255,.07);color:var(--cyan);}
+.ai-cyan::before{border-color:var(--cyan);}
+.ai-violet{background:rgba(167,139,250,.07);color:var(--violet2);}
+.ai-violet::before{border-color:var(--violet2);}
+.ai-green{background:rgba(0,255,136,.06);color:var(--green);}
+.ai-green::before{border-color:var(--green);}
+.ach-title{font-family:'Space Grotesk',sans-serif;font-size:.86rem;font-weight:600;margin-bottom:.22rem;}
+.ach-desc{color:var(--muted);font-size:.77rem;line-height:1.55;}
+
+/* ── EXPERIENCE TIMELINE ──────────────── */
+.exp-tl{position:relative;padding-left:1.5rem;}
+.exp-tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--cyan),var(--violet),transparent);}
+.exp-item{position:relative;padding:0 0 2.5rem 2rem;margin-left:.5rem;}
+.exp-dot{position:absolute;left:-2.12rem;top:.3rem;width:10px;height:10px;border-radius:50%;background:var(--void);border:1.5px solid var(--cyan);transition:.2s;}
+.exp-item:hover .exp-dot{background:var(--cyan);box-shadow:0 0 10px var(--cyan);}
+.exp-inner{padding:1.4rem;}
+.exp-hd{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.4rem;margin-bottom:.55rem;}
+.exp-role{font-family:'Space Grotesk',sans-serif;font-size:.93rem;font-weight:600;}
+.exp-co{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--cyan);letter-spacing:.04em;}
+.exp-dur{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);background:rgba(0,212,255,.05);border:1px solid var(--border);padding:.18rem .55rem;border-radius:3px;}
+.exp-list{list-style:none;margin-top:.45rem;}
+.exp-list li{color:var(--muted);font-size:.82rem;line-height:1.65;padding-left:.95rem;position:relative;margin-bottom:.28rem;}
+.exp-list li::before{content:'▸';position:absolute;left:0;color:var(--cyan);font-size:.62rem;top:.18rem;}
+
+/* ── DASHBOARD ────────────────────────── */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+@media(max-width:900px){.dash-grid{grid-template-columns:1fr;}}
+.dash-card{padding:1.4rem;font-family:'JetBrains Mono',monospace;}
+.dash-lbl{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.75rem;display:flex;align-items:center;gap:.4rem;}
+.dash-lbl::before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--cyan);box-shadow:0 0 5px var(--cyan);}
+.db-bar-item{margin-bottom:.5rem;}
+.db-bar-meta{display:flex;justify-content:space-between;font-size:.6rem;color:var(--muted);margin-bottom:.2rem;}
+.db-bar-track{height:3px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden;}
+.db-bar-fill{height:100%;border-radius:2px;}
+.af{list-style:none;}
+.af-item{display:flex;align-items:flex-start;gap:.6rem;padding:.45rem 0;border-bottom:1px solid var(--border);}
+.af-item:last-child{border-bottom:none;}
+.af-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:.35rem;}
+.af-text{font-size:.65rem;color:var(--muted);line-height:1.5;}
+.af-time{font-size:.58rem;color:rgba(107,127,163,.45);white-space:nowrap;margin-top:.1rem;}
+
 </style>
+<script>
+(function(){
+  var img=new Image();
+  img.crossOrigin='anonymous';
+  img.onload=function(){
+    var c=document.createElement('canvas');
+    c.width=c.height=64;
+    var ctx=c.getContext('2d');
+    ctx.beginPath();ctx.arc(32,32,30,0,Math.PI*2);ctx.closePath();ctx.clip();
+    ctx.drawImage(img,0,0,64,64);
+    // cyan border ring
+    ctx.beginPath();ctx.arc(32,32,30,0,Math.PI*2);
+    ctx.strokeStyle='rgba(0,212,255,0.85)';ctx.lineWidth=3;ctx.stroke();
+    var link=document.querySelector("link[rel~='icon']")||document.createElement('link');
+    link.rel='icon';link.type='image/png';link.href=c.toDataURL('image/png');
+    document.head.appendChild(link);
+  };
+  img.onerror=function(){
+    // fallback: SVG circular monogram
+    var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#050810"/><circle cx="32" cy="32" r="30" fill="none" stroke="#00D4FF" stroke-width="2.5"/><text x="32" y="38" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="22" fill="#00D4FF">A</text></svg>';
+    var b64=btoa(svg);
+    var link=document.querySelector("link[rel~='icon']")||document.createElement('link');
+    link.rel='icon';link.type='image/svg+xml';
+    link.href='data:image/svg+xml;base64,'+b64;
+    document.head.appendChild(link);
+  };
+  img.src='https://i.postimg.cc/hPyNdGVF/Whats-App-Image-2026-07-05-at-9-35-59-PM.jpg';
+})();
+</script>
 </head>
 <body>
 
@@ -339,9 +452,12 @@ footer{border-top:1px solid var(--border);padding:3rem 0 1.5rem;position:relativ
         <li><a href="#about">About</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#certifications">Certs</a></li>
+        <li><a href="#specializations">Specs</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#tools">Tools</a></li>
+        <li><a href="#platforms">Platforms</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
         <li><a href="#timeline">Timeline</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
@@ -356,9 +472,13 @@ footer{border-top:1px solid var(--border);padding:3rem 0 1.5rem;position:relativ
     <a href="#about">About</a>
     <a href="#education">Education</a>
     <a href="#certifications">Certifications</a>
+    <a href="#specializations">Specializations</a>
     <a href="#skills">Skills</a>
     <a href="#tools">Tools</a>
+    <a href="#platforms">Platforms</a>
     <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#achievements">Achievements</a>
     <a href="#timeline">Timeline</a>
     <a href="#contact">Contact</a>
 </div>
@@ -634,9 +754,134 @@ footer{border-top:1px solid var(--border);padding:3rem 0 1.5rem;position:relativ
     </div>
 </section>
 
+
+<!-- SPECIALIZATIONS -->
+<section id="specializations" style="background:linear-gradient(180deg,transparent,rgba(11,19,40,0.35),transparent);">
+    <div class="container">
+        <div class="reveal"><div class="sec-eye">06b Specializations</div><h2 class="sec-title">Cybersecurity Domains</h2><div class="sec-rule"></div></div>
+        <div class="spec-grid">
+            <div class="spec-card card reveal"><div class="card-glow"></div><div class="spec-ic s1"><i class="fa-solid fa-user-secret"></i></div><div class="spec-name">Ethical Hacking</div><div class="spec-lv lv-l">Learning</div></div>
+            <div class="spec-card card reveal rv1"><div class="card-glow"></div><div class="spec-ic s2"><i class="fa-solid fa-bullseye"></i></div><div class="spec-name">Penetration Testing</div><div class="spec-lv lv-s">Studying</div></div>
+            <div class="spec-card card reveal rv2"><div class="card-glow"></div><div class="spec-ic s3"><i class="fa-solid fa-magnifying-glass-chart"></i></div><div class="spec-name">Vulnerability Assessment</div><div class="spec-lv lv-l">Learning</div></div>
+            <div class="spec-card card reveal rv3"><div class="card-glow"></div><div class="spec-ic s4"><i class="fa-solid fa-network-wired"></i></div><div class="spec-name">Network Security</div><div class="spec-lv lv-l">Learning</div></div>
+            <div class="spec-card card reveal"><div class="card-glow"></div><div class="spec-ic s1"><i class="fa-solid fa-desktop"></i></div><div class="spec-name">SOC Operations</div><div class="spec-lv lv-l">Learning</div></div>
+            <div class="spec-card card reveal rv1"><div class="card-glow"></div><div class="spec-ic s2"><i class="fa-solid fa-fingerprint"></i></div><div class="spec-name">Digital Forensics</div><div class="spec-lv lv-s">Certified</div></div>
+            <div class="spec-card card reveal rv2"><div class="card-glow"></div><div class="spec-ic s3"><i class="fa-solid fa-fire-extinguisher"></i></div><div class="spec-name">Incident Response</div><div class="spec-lv lv-s">Certified</div></div>
+            <div class="spec-card card reveal rv3"><div class="card-glow"></div><div class="spec-ic s4"><i class="fa-solid fa-crosshairs"></i></div><div class="spec-name">Threat Hunting</div><div class="spec-lv lv-s">Studying</div></div>
+            <div class="spec-card card reveal"><div class="card-glow"></div><div class="spec-ic s1"><i class="fa-solid fa-bug"></i></div><div class="spec-name">Malware Analysis</div><div class="spec-lv lv-e">Exploring</div></div>
+            <div class="spec-card card reveal rv1"><div class="card-glow"></div><div class="spec-ic s2"><i class="fa-solid fa-globe"></i></div><div class="spec-name">Web App Security</div><div class="spec-lv lv-s">Studying</div></div>
+            <div class="spec-card card reveal rv2"><div class="card-glow"></div><div class="spec-ic s3"><i class="fa-solid fa-cloud"></i></div><div class="spec-name">Cloud Security</div><div class="spec-lv lv-e">Exploring</div></div>
+            <div class="spec-card card reveal rv3"><div class="card-glow"></div><div class="spec-ic s4"><i class="fa-solid fa-binoculars"></i></div><div class="spec-name">OSINT</div><div class="spec-lv lv-e">Exploring</div></div>
+            <div class="spec-card card reveal"><div class="card-glow"></div><div class="spec-ic s1"><i class="fa-solid fa-robot"></i></div><div class="spec-name">Security Automation</div><div class="spec-lv lv-e">Exploring</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- PLATFORMS -->
+<section id="platforms">
+    <div class="container">
+        <div class="reveal"><div class="sec-eye">07b Platforms</div><h2 class="sec-title">Learning Platforms & Badges</h2><div class="sec-rule"></div></div>
+        <div class="plat-grid">
+            <div class="plat-card card reveal"><div class="card-glow"></div><div class="plat-ic pi-htb"><i class="fa-solid fa-cube"></i></div><div class="plat-name">Hack The Box</div><div class="plat-st st-plan">— Join & Add Profile —</div><div class="plat-sub">Offensive Security Platform</div><div class="plat-prog"><div class="pp" style="width:0%"></div></div></div>
+            <div class="plat-card card reveal rv1"><div class="card-glow"></div><div class="plat-ic pi-thm"><i class="fa-solid fa-flag"></i></div><div class="plat-name">TryHackMe</div><div class="plat-st st-plan">— Join & Add Profile —</div><div class="plat-sub">Guided Security Learning</div><div class="plat-prog"><div class="pp" style="width:0%"></div></div></div>
+            <div class="plat-card card reveal rv2"><div class="card-glow"></div><div class="plat-ic pi-ps"><i class="fa-solid fa-spider"></i></div><div class="plat-name">PortSwigger Web Academy</div><div class="plat-st st-plan">— Enrol & Add Profile —</div><div class="plat-sub">Web App Security</div><div class="plat-prog"><div class="pp" style="width:0%"></div></div></div>
+            <div class="plat-card card reveal rv3"><div class="card-glow"></div><div class="plat-ic pi-cisco"><i class="fa-solid fa-network-wired"></i></div><div class="plat-name">Cisco Networking Academy</div><div class="plat-st st-active">● Active</div><div class="plat-sub">4 Certs · Learn-A-Thon Award</div><div class="plat-prog"><div class="pp" style="width:92%"></div></div></div>
+            <div class="plat-card card reveal"><div class="card-glow"></div><div class="plat-ic pi-bluecap"><i class="fa-solid fa-microscope"></i></div><div class="plat-name">BlueCapeSecurity</div><div class="plat-st st-active">● DFIR Certified</div><div class="plat-sub">DFIR Foundations & Techniques</div><div class="plat-prog"><div class="pp" style="width:100%"></div></div></div>
+            <div class="plat-card card reveal rv1"><div class="card-glow"></div><div class="plat-ic pi-otw"><i class="fa-solid fa-terminal"></i></div><div class="plat-name">OverTheWire</div><div class="plat-st st-plan">— Start Challenges —</div><div class="plat-sub">Linux & Wargames</div><div class="plat-prog"><div class="pp" style="width:0%"></div></div></div>
+            <div class="plat-card card reveal rv2"><div class="card-glow"></div><div class="plat-ic pi-pico"><i class="fa-solid fa-puzzle-piece"></i></div><div class="plat-name">PicoCTF</div><div class="plat-st st-plan">— Join & Compete —</div><div class="plat-sub">CTF Competitions</div><div class="plat-prog"><div class="pp" style="width:0%"></div></div></div>
+            <div class="plat-card card reveal rv3"><div class="card-glow"></div><div class="plat-ic pi-cd"><i class="fa-solid fa-magnifying-glass-chart"></i></div><div class="plat-name">CyberDefenders</div><div class="plat-st st-plan">— Join & Add Profile —</div><div class="plat-sub">Blue Team Labs</div><div class="plat-prog"><div class="pp" style="width:0%"></div></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="background:linear-gradient(180deg,transparent,rgba(11,19,40,0.35),transparent);">
+    <div class="container">
+        <div class="reveal"><div class="sec-eye">07c Experience</div><h2 class="sec-title">Professional Experience</h2><div class="sec-rule"></div></div>
+        <div class="exp-tl">
+            <div class="exp-item reveal">
+                <div class="exp-dot"></div>
+                <div class="exp-inner card"><div class="card-glow"></div><div class="corner tl"></div>
+                    <div class="exp-hd"><div><div class="exp-role">Co-Founder & Technology Lead</div><div class="exp-co">Lizzdo.com</div></div><span class="exp-dur">2023 – Present</span></div>
+                    <ul class="exp-list">
+                        <li>Co-founded a digital technology platform delivering AI-powered solutions, automation, 3D/2D design, and digital products for international clients across the USA, Europe, and the Middle East.</li>
+                        <li>Managed 100+ client projects with structured documentation, escalation processes, and quality assurance — skills directly transferable to SOC operations and incident reporting.</li>
+                        <li>Integrated AI tools, automation pipelines, and prompt engineering systems — building practical AI/ML experience relevant to security automation.</li>
+                        <li>Researched and evaluated emerging technologies systematically — continuous learning mindset essential in cybersecurity.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exp-item reveal rv1">
+                <div class="exp-dot"></div>
+                <div class="exp-inner card"><div class="card-glow"></div><div class="corner tl"></div>
+                    <div class="exp-hd"><div><div class="exp-role">Freelance Technology Specialist</div><div class="exp-co">Remote — Fiverr, Upwork, Freelancer</div></div><span class="exp-dur">2021 – Present</span></div>
+                    <ul class="exp-list">
+                        <li>Delivered 100+ technical projects for international clients — web platforms, digital products, 3D production, automation systems, and brand technology solutions.</li>
+                        <li>Maintained meticulous project documentation and communicated technical findings clearly — building precision and reporting habits essential to security work.</li>
+                        <li>Independently diagnosed and resolved complex technical issues under deadline pressure — mirroring the triage and investigation cycle of security operations.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+    <div class="container">
+        <div class="reveal"><div class="sec-eye">07d Achievements</div><h2 class="sec-title">Achievements & Recognition</h2><div class="sec-rule"></div></div>
+        <div class="ach-grid">
+            <div class="ach-card card reveal"><div class="card-glow"></div><div class="ach-ic ai-gold"><i class="fa-solid fa-award"></i></div><div class="ach-title">Cisco Learn-A-Thon 2026</div><p class="ach-desc">Learner Achievement Award — exceptional and sustained learning engagement within the Cisco Networking Academy (Mar 2026).</p></div>
+            <div class="ach-card card reveal rv1"><div class="card-glow"></div><div class="ach-ic ai-cyan"><i class="fa-solid fa-shield-halved"></i></div><div class="ach-title">Mastercard SOC Simulation</div><p class="ach-desc">Completed Mastercard Cybersecurity Job Simulation via Forage — phishing design and IOC analysis (Jun 2026).</p></div>
+            <div class="ach-card card reveal rv2"><div class="card-glow"></div><div class="ach-ic ai-green"><i class="fa-solid fa-microscope"></i></div><div class="ach-title">BlueCapeSecurity DFIR Certified</div><p class="ach-desc">Completed DFIR Foundations & Techniques — professional digital forensics and incident response training (2026).</p></div>
+            <div class="ach-card card reveal rv3"><div class="card-glow"></div><div class="ach-ic ai-violet"><i class="fa-solid fa-graduation-cap"></i></div><div class="ach-title">BSc Computer Science</div><p class="ach-desc">Successfully completed BSc Computer Science at the University of Peshawar — foundation for cybersecurity specialisation.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard" style="background:linear-gradient(180deg,transparent,rgba(11,19,40,0.35),transparent);">
+    <div class="container">
+        <div class="reveal"><div class="sec-eye">07e Dashboard</div><h2 class="sec-title">Security Dashboard</h2><div class="sec-rule"></div></div>
+        <div class="dash-grid">
+            <div class="card dash-card reveal"><div class="card-glow"></div><div class="corner tl"></div>
+                <div class="dash-lbl">Learning Progress</div>
+                <div class="db-bar-item"><div class="db-bar-meta"><span>Networking</span><span>92%</span></div><div class="db-bar-track"><div class="db-bar-fill" style="width:92%;background:linear-gradient(90deg,var(--cyan),var(--cyan2))"></div></div></div>
+                <div class="db-bar-item"><div class="db-bar-meta"><span>Linux Essentials</span><span>78%</span></div><div class="db-bar-track"><div class="db-bar-fill" style="width:78%;background:linear-gradient(90deg,var(--green),rgba(0,255,136,.5))"></div></div></div>
+                <div class="db-bar-item"><div class="db-bar-meta"><span>Ethical Hacking</span><span>72%</span></div><div class="db-bar-track"><div class="db-bar-fill" style="width:72%;background:linear-gradient(90deg,var(--violet),var(--violet2))"></div></div></div>
+                <div class="db-bar-item"><div class="db-bar-meta"><span>DFIR</span><span>68%</span></div><div class="db-bar-track"><div class="db-bar-fill" style="width:68%;background:linear-gradient(90deg,#00B4FF,rgba(0,180,255,.5))"></div></div></div>
+                <div class="db-bar-item"><div class="db-bar-meta"><span>Python Scripting</span><span>70%</span></div><div class="db-bar-track"><div class="db-bar-fill" style="width:70%;background:linear-gradient(90deg,var(--amber),rgba(255,183,0,.5))"></div></div></div>
+                <div class="db-bar-item"><div class="db-bar-meta"><span>Penetration Testing</span><span>55%</span></div><div class="db-bar-track"><div class="db-bar-fill" style="width:55%;background:linear-gradient(90deg,var(--red),rgba(255,56,96,.5))"></div></div></div>
+            </div>
+            <div class="card dash-card reveal rv1"><div class="card-glow"></div><div class="corner tl"></div>
+                <div class="dash-lbl">Certification Tracker</div>
+                <div class="db-bar-item"><div class="db-bar-meta"><span>Cisco Networking Essentials</span><span style="color:var(--cyan)">✓</span></div><div class="db-bar-track"><div class="db-bar-fill" style="width:100%;background:var(--cyan)"></div></div></div>
+                <div class="db-bar-item"><div class="db-bar-meta"><span>Cisco Intro to Cybersecurity</span><span style="color:var(--cyan)">✓</span></div><div class="db-bar-track"><div class="db-bar-fill" style="width:100%;background:var(--cyan)"></div></div></div>
+                <div class="db-bar-item"><div class="db-bar-meta"><span>Cisco Linux Essentials</span><span style="color:var(--cyan)">✓</span></div><div class="db-bar-track"><div class="db-bar-fill" style="width:100%;background:var(--cyan)"></div></div></div>
+                <div class="db-bar-item"><div class="db-bar-meta"><span>Cisco Ethical Hacker</span><span style="color:var(--cyan)">✓</span></div><div class="db-bar-track"><div class="db-bar-fill" style="width:100%;background:var(--cyan)"></div></div></div>
+                <div class="db-bar-item"><div class="db-bar-meta"><span>BlueCapeSecurity DFIR</span><span style="color:var(--cyan)">✓</span></div><div class="db-bar-track"><div class="db-bar-fill" style="width:100%;background:var(--cyan)"></div></div></div>
+                <div class="db-bar-item"><div class="db-bar-meta"><span>Mastercard Cyber Simulation</span><span style="color:var(--cyan)">✓</span></div><div class="db-bar-track"><div class="db-bar-fill" style="width:100%;background:var(--cyan)"></div></div></div>
+                <div class="db-bar-item"><div class="db-bar-meta"><span>CompTIA Security+</span><span style="color:var(--violet2)">In Progress</span></div><div class="db-bar-track"><div class="db-bar-fill" style="width:20%;background:var(--violet)"></div></div></div>
+            </div>
+            <div class="card dash-card reveal rv2"><div class="card-glow"></div><div class="corner tl"></div>
+                <div class="dash-lbl">Recent Activity Feed</div>
+                <ul class="af">
+                    <li class="af-item"><div class="af-dot" style="background:var(--cyan);box-shadow:0 0 5px var(--cyan)"></div><div><div class="af-text">Mastercard Cybersecurity Job Simulation — phishing analysis & IOC report completed</div><div class="af-time">Jun 2026</div></div></li>
+                    <li class="af-item"><div class="af-dot" style="background:#00B4FF"></div><div><div class="af-text">BlueCapeSecurity DFIR Foundations & Techniques — certified</div><div class="af-time">2026</div></div></li>
+                    <li class="af-item"><div class="af-dot" style="background:var(--violet2)"></div><div><div class="af-text">Cisco Ethical Hacker course completed — 70hrs, 34 labs, Kali Linux</div><div class="af-time">2026</div></div></li>
+                    <li class="af-item"><div class="af-dot" style="background:var(--green)"></div><div><div class="af-text">Cisco Linux Essentials certified — LPI PDC 010-160 aligned</div><div class="af-time">2026</div></div></li>
+                    <li class="af-item"><div class="af-dot" style="background:var(--cyan)"></div><div><div class="af-text">Cisco Learn-A-Thon 2026 Learner Achievement Award received</div><div class="af-time">Mar 2026</div></div></li>
+                    <li class="af-item"><div class="af-dot" style="background:var(--muted)"></div><div><div class="af-text">Completed Introduction to Cybersecurity — Cisco Networking Academy</div><div class="af-time">Mar 2026</div></div></li>
+                    <li class="af-item"><div class="af-dot" style="background:var(--muted)"></div><div><div class="af-text">Networking Essentials certified — Cisco / ITU-DTC Pakistan</div><div class="af-time">Nov 2025</div></div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section id="timeline">
     <div class="container">
-        <div class="reveal"><div class="sec-eye">07 Timeline</div><h2 class="sec-title">Cybersecurity Journey</h2><div class="sec-rule"></div></div>
+        <div class="reveal"><div class="sec-eye">08 Timeline</div><h2 class="sec-title">Cybersecurity Journey</h2><div class="sec-rule"></div></div>
         <div class="tl-wrap">
             <div class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date">2021</div><div class="tl-title">Started Freelance Technology Career</div><div class="tl-body">Began delivering technology solutions for international clients — web development, automation, AI tools, and digital product management.</div></div>
             <div class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date">2023</div><div class="tl-title">Co-Founded Lizzdo.com</div><div class="tl-body">Launched Lizzdo.com serving global clients. Built remote team management, AI integration, and product delivery expertise.</div></div>
@@ -653,7 +898,7 @@ footer{border-top:1px solid var(--border);padding:3rem 0 1.5rem;position:relativ
 
 <section id="resume" style="background:linear-gradient(180deg,transparent,rgba(11,19,40,0.35),transparent);">
     <div class="container" style="text-align:center;">
-        <div class="reveal"><div class="sec-eye" style="justify-content:center;display:flex;">08 Resume</div><h2 class="sec-title">Download My Resume</h2><div class="sec-rule" style="margin:0 auto 2.5rem;"></div></div>
+        <div class="reveal"><div class="sec-eye" style="justify-content:center;display:flex;">09 Resume</div><h2 class="sec-title">Download My Resume</h2><div class="sec-rule" style="margin:0 auto 2.5rem;"></div></div>
         <div class="res-wrap reveal">
             <div class="card" style="padding:2.4rem;"><div class="card-glow"></div><div class="corner tl"></div><div class="corner br"></div>
                 <div class="res-ic"><i class="fa-solid fa-file-shield"></i></div>
@@ -667,7 +912,7 @@ footer{border-top:1px solid var(--border);padding:3rem 0 1.5rem;position:relativ
 
 <section id="contact">
     <div class="container">
-        <div class="reveal"><div class="sec-eye">09 Contact</div><h2 class="sec-title">Get In Touch</h2><div class="sec-rule"></div></div>
+        <div class="reveal"><div class="sec-eye">10 Contact</div><h2 class="sec-title">Get In Touch</h2><div class="sec-rule"></div></div>
         <div class="con-grid">
             <div class="reveal">
                 <div class="con-title">Open to Opportunities</div>
@@ -703,8 +948,9 @@ footer{border-top:1px solid var(--border);padding:3rem 0 1.5rem;position:relativ
         <div><div class="ft-brand">[Aimad<span>.</span>Security]</div><p class="ft-tag">Cybersecurity professional, SOC enthusiast, and network security specialist from Peshawar, Pakistan. Certified in Cisco Networking, Linux Essentials, Ethical Hacking, and DFIR. Building expertise in threat detection, digital forensics, and security operations.</p></div>
         <div class="ft-col"><h4>Navigation</h4>
             <a href="#about">About</a><a href="#education">Education</a><a href="#certifications">Certifications</a>
-            <a href="#skills">Skills</a><a href="#tools">Tools</a><a href="#projects">Projects</a>
-            <a href="#timeline">Timeline</a><a href="#contact">Contact</a>
+            <a href="#skills">Skills</a><a href="#tools">Tools</a><a href="#specializations">Specializations</a>
+            <a href="#platforms">Platforms</a><a href="#projects">Projects</a><a href="#experience">Experience</a>
+            <a href="#achievements">Achievements</a><a href="#timeline">Timeline</a><a href="#contact">Contact</a>
         </div>
         <div class="ft-col"><h4>Connect</h4>
             <a href="https://www.linkedin.com/in/aimad-ulislam/" target="_blank"><i class="fa-brands fa-linkedin-in fa-xs"></i> LinkedIn</a>
