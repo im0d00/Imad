@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Allow: /blog.html
+Allow: /posts/
+Disallow: /assets/private/
+
+Sitemap: https://aimadulislam.dpdns.org/sitemap.xml
