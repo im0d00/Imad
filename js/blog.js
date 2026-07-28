@@ -120,6 +120,24 @@ const BLOG_POSTS = [
     imageAlt: "Home lab setup with multiple VMs",
     emoji: "🏠",
   },
+   {
+    id: 7,
+    title: "Metasploitable 2: The Ultimate Beginner's Guide to Exploitation",
+    subtitle: "Learn how to hack Metasploitable 2 from scratch using Metasploit – exploit vsftpd, UnrealIRCd, and more. Step‑by‑step guide for beginners.",
+    excerpt: "Metasploitable 2 is the perfect target for practising exploitation. This guide takes you through setting up the VM, reconnaissance, and exploiting the vsftpd backdoor and UnrealIRCd backdoor using Metasploit – with post‑exploitation tips included.",
+    slug: "metasploitable-complete-guide",
+    file: "posts/metasploitable-complete-guide.html",
+    category: ["Cybersecurity", "Tutorials", "Linux"],
+    tags: ["metasploitable", "metasploit", "exploitation", "penetration-testing", "ethical-hacking"],
+    author: "Aimad Ul Islam",
+    date: "2026-07-25",
+    updated: "2026-07-25",
+    readingTime: 20,
+    featured: false,
+    image: "",
+    imageAlt: "Metasploitable 2 exploitation with Metasploit",
+    emoji: "🎯",
+  },
 ];
 
 /* ── CONFIG ──────────────────────────────────────────────────────────────── */
