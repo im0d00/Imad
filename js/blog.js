@@ -138,6 +138,24 @@ const BLOG_POSTS = [
     imageAlt: "Metasploitable 2 exploitation with Metasploit",
     emoji: "🎯",
   },
+     {
+    id: 8,
+    title: "DLL & Code Injection: Build a Stealthy Python Backdoor from Scratch",
+    subtitle: "Master remote thread creation, DLL injection, and code injection to build a professional-grade Python backdoor with process execution redirection.",
+    excerpt: "Learn how to inject DLLs and raw shellcode into remote Windows processes using Python. This deep dive covers remote thread creation, process injection, Alternate Data Streams, and compiling a fully functional red-team backdoor.",
+    slug: "python-backdoor-injection",
+    file: "posts/python-backdoor-injection.html",
+    category: ["Programming", "Cybersecurity", "Tutorials"],
+    tags: ["python", "dll-injection", "code-injection", "backdoor", "cybersecurity", "windows", "metasploit"],
+    author: "Aimad Ul Islam",
+    date: "2026-08-05",
+    updated: "2026-08-05",
+    readingTime: 24,
+    featured: false,
+    image: "",
+    imageAlt: "Python code injecting a DLL into a remote process",
+    emoji: "🐉",
+  },
 ];
 
 /* ── CONFIG ──────────────────────────────────────────────────────────────── */
