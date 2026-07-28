@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Linux Essentials: Every Command You Actually Need — Aimad Ul Islam</title>
+  <meta name="description" content="From file permissions to bash scripting — the complete Linux reference guide for cybersecurity professionals, built during my Cisco Linux Essentials (LPI PDC) certification."/>
+  <meta name="keywords" content="linux, bash, command-line, permissions, scripting, lpi, linux essentials, cisco, cybersecurity, system administration"/>
+  <meta name="author" content="Aimad Ul Islam"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://aimadulislam.dpdns.org/posts/linux-essentials-guide.html"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="Linux Essentials: Every Command You Actually Need"/>
+  <meta property="og:description" content="From file permissions to bash scripting — the complete Linux reference guide for cybersecurity professionals."/>
+  <meta property="og:url" content="https://aimadulislam.dpdns.org/posts/linux-essentials-guide.html"/>
+  <meta property="article:author" content="Aimad Ul Islam"/>
+  <meta property="article:published_time" content="2026-06-28"/>
+  <meta property="article:section" content="Linux"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Linux Essentials: Every Command You Actually Need"/>
+  <meta name="twitter:description" content="The complete Linux reference guide for cybersecurity professionals."/>
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Linux Essentials: Every Command You Actually Need",
+    "description": "The complete Linux reference guide for cybersecurity professionals.",
+    "author": {"@type": "Person", "name": "Aimad Ul Islam", "url": "https://aimadulislam.dpdns.org"},
+    "datePublished": "2026-06-28",
+    "dateModified": "2026-07-01",
+    "url": "https://aimadulislam.dpdns.org/posts/linux-essentials-guide.html",
+    "publisher": {"@type": "Person", "name": "Aimad Ul Islam"}
+  }
+  </script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23050810'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%2300D4FF' stroke-width='2.5'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='26' fill='%2300D4FF'%3EA%3C/text%3E%3C/svg%3E"/>
+
+  <!-- Fonts & CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../css/blog.css"/>
+</head>
+<body>
+
+<!-- Reading Progress Bar -->
+<div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+
+<!-- Background Elements -->
+<div class="grid-bg" aria-hidden="true"></div>
+<div class="scan-line" aria-hidden="true"></div>
+
+<!-- Navigation -->
+<nav class="blog-nav" id="navbar" role="navigation" aria-label="Main navigation">
+  <a href="../index.html" class="nav-logo">
+    <span class="br">[</span>Aimad<span class="nav-dot" aria-hidden="true"></span>Security<span class="br">]</span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#certifications">Certs</a></li>
+    <li><a href="../index.html#skills">Skills</a></li>
+    <li><a href="../blog.html" class="active">Blog</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-status"><div class="status-dot" aria-hidden="true"></div><span class="status-text">Available for Internship</span></div>
+    <button id="dark-mode-btn" class="dark-mode-btn" aria-label="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    <a href="../blog.html" class="nav-btn"><i class="fa-solid fa-arrow-left fa-xs" aria-hidden="true"></i> Blog</a>
+  </div>
+  <button class="hamburger" id="ham" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-nav" id="mobNav">
+  <a href="../index.html">Home</a>
+  <a href="../blog.html">Blog</a>
+  <a href="../index.html#contact">Contact</a>
+</div>
+
+<!-- Article Hero -->
+<div class="article-hero" style="padding-top:86px;">
+  <div class="container-narrow">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html"><i class="fa-solid fa-house fa-xs" aria-hidden="true"></i> Home</a>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <a href="../blog.html">Blog</a>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <span aria-current="page">Linux Essentials</span>
+    </nav>
+
+    <!-- Hero Image placeholder -->
+    <div class="article-hero-img-wrap" style="max-height:380px;background:linear-gradient(135deg,rgba(0,255,136,0.06),rgba(0,212,255,0.08));display:flex;align-items:center;justify-content:center;font-size:6rem;min-height:200px;">
+      🐧
+    </div>
+
+    <!-- Article Header -->
+    <header class="article-header">
+      <div class="article-cats">
+        <span class="tag tag-linux">Linux</span>
+        <span class="tag tag-tut">Tutorials</span>
+      </div>
+      <h1 class="article-title">Linux Essentials: Every Command You Actually Need</h1>
+      <p class="article-subtitle">This is the Linux reference guide I built during my Cisco Linux Essentials (LPI PDC) certification. Covers CLI, permissions, bash scripting, package management, system security, and everything in between.</p>
+      <div class="article-meta" role="contentinfo" aria-label="Article information">
+        <div class="article-meta-item"><i class="fa-solid fa-user" aria-hidden="true"></i><span><strong>Aimad Ul Islam</strong></span></div>
+        <div class="article-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i><span>June 28, 2026</span></div>
+        <div class="article-meta-item"><i class="fa-solid fa-rotate" aria-hidden="true"></i><span>Updated: July 1, 2026</span></div>
+        <div class="article-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i><span id="reading-time-val">20 min read</span></div>
+      </div>
+      <div class="article-tags" aria-label="Tags">
+        <span class="tag tag-linux">linux</span>
+        <span class="tag tag-tut">bash</span>
+        <span class="tag tag-tut">command-line</span>
+        <span class="tag tag-tut">permissions</span>
+        <span class="tag tag-tut">scripting</span>
+        <span class="tag tag-tut">lpi</span>
+      </div>
+    </header>
+  </div>
+</div>
+
+<!-- Main Content -->
+<main>
+  <section style="padding-top:2rem;">
+    <div class="container">
+      <div class="article-layout">
+
+        <!-- Article Body -->
+        <article>
+
+          <!-- Table of Contents -->
+          <nav id="toc" aria-label="Table of contents">
+            <div class="toc-title" role="button" aria-expanded="true" tabindex="0">
+              <i class="fa-solid fa-list" aria-hidden="true"></i> Table of Contents
+              <i class="fa-solid fa-chevron-down" style="margin-left:auto;font-size:0.7rem;" aria-hidden="true"></i>
+            </div>
+            <ol class="toc-list" role="list">
+              <li class="toc-item"><a href="#intro">Introduction</a></li>
+              <li class="toc-item"><a href="#filesystem">File System Navigation</a></li>
+              <li class="toc-item"><a href="#permissions">File Permissions & Ownership</a></li>
+              <li class="toc-item"><a href="#text">Text Processing & Filtering</a></li>
+              <li class="toc-item"><a href="#packages">Package Management</a></li>
+              <li class="toc-item"><a href="#processes">Processes & System Monitoring</a></li>
+              <li class="toc-item"><a href="#users">Users & Groups</a></li>
+              <li class="toc-item"><a href="#scripting">Bash Scripting for Automation</a></li>
+              <li class="toc-item"><a href="#security">Linux Security Hardening</a></li>
+              <li class="toc-item"><a href="#next-steps">Next Steps & Resources</a></li>
+            </ol>
+          </nav>
+
+          <!-- Article Body Text -->
+          <div class="article-body">
+
+            <h2 id="intro">Introduction</h2>
+            <p>Linux is the undisputed backbone of modern IT infrastructure. From cloud servers (AWS, Azure, GCP) to container orchestration (Kubernetes, Docker) and enterprise networks, Linux runs over 90% of the world's servers. More importantly for us cybersecurity professionals, <strong>Kali Linux</strong> is the industry standard for penetration testing.</p>
+            <p>During my <strong>Cisco Linux Essentials</strong> certification (aligned with the <strong>LPI Linux Professional Institute Certification - Linux Essentials (010-160)</strong>), I built this comprehensive reference guide. It condenses everything you need to know into practical, executable commands.</p>
+
+            <div class="callout callout-info">
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+              <div>
+                <div class="callout-title">LPI Essentials Focus</div>
+                <div class="callout-body">This guide covers the core competencies of the LPI Linux Essentials exam, including CLI navigation, managing files and permissions, working with text streams, installing software, and basic shell scripting.</div>
+              </div>
+            </div>
+
+            <div class="callout callout-warn">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+              <div>
+                <div class="callout-title">Linux & Cybersecurity</div>
+                <div class="callout-body">If you are learning ethical hacking, start here. Almost every tool you will use (Metasploit, Nmap, Burp Suite, Wireshark, etc.) runs natively on Linux. A deep understanding of the CLI is mandatory for any penetration tester or SOC analyst.</div>
+              </div>
+            </div>
+
+            <h2 id="filesystem">File System Navigation</h2>
+            <p>The Linux file system is a hierarchical tree starting from the root directory, denoted by a forward slash (<code>/</code>). Here are the commands you will use daily to move around.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">Navigating the Filesystem</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code># Print current working directory
+pwd
+
+# List files in the current directory
+ls
+
+# List all files (including hidden .files) with detailed info
+ls -la
+
+# Change directory to /etc
+cd /etc
+
+# Go back to the previous directory
+cd -
+
+# Go to your user's home directory (~)
+cd ~
+
+# View directory structure as a tree (install if needed: apt install tree)
+tree -L 2 /var/log</code></pre>
+            </div>
+            <p>Key directories you should memorise: <code>/etc</code> (configuration files), <code>/var/log</code> (system logs), <code>/home</code> (user home directories), and <code>/bin</code> (essential system binaries).</p>
+
+            <h2 id="permissions">File Permissions & Ownership</h2>
+            <p>Linux is a multi-user operating system, and permissions are critical for security. Every file and directory has three permission sets: <strong>Owner</strong> (u), <strong>Group</strong> (g), and <strong>Others</strong> (o).</p>
+            <p>Permissions are broken into <strong>Read</strong> (r), <strong>Write</strong> (w), and <strong>Execute</strong> (x). They can be represented symbolically (<code>-rwxr-xr--</code>) or by octal numbers (<code>755</code>).</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">Understanding and Modifying Permissions</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code># View current permissions
+ls -l filename.txt
+# Output: -rw-r--r-- 1 aimad aimad 2048 Jun 28 10:00 filename.txt
+
+# Change permissions using octal values
+chmod 755 script.sh  # Owner:rwx, Group:r-x, Others:r-x
+
+# Change permissions using symbolic notation
+chmod u+x script.sh  # Adds execute for the owner
+chmod go-w script.sh # Removes write for group and others
+
+# Change ownership of a file
+sudo chown newuser:newgroup filename.txt
+
+# Change default file creation permissions (umask)
+umask 022  # Sets default permissions to 755 for directories, 644 for files</code></pre>
+            </div>
+            <p><strong>Important for Security:</strong> Never give <code>777</code> (full permissions to everyone) to a file on a production server. This is a major security risk allowing anyone to modify your critical files.</p>
+
+            <h2 id="text">Text Processing & Filtering</h2>
+            <p>In Linux, everything is a file or a stream of text. Mastering text processing tools allows you to filter massive log files, extract IP addresses, and parse command outputs quickly.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">Text Pipes & Filters</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code># View a file page by page
+less /var/log/syslog
+
+# View only the first 10 or last 10 lines of a file
+head -n 5 /etc/passwd
+tail -f /var/log/auth.log  # Follow new lines in real-time (great for monitoring)
+
+# Search for specific text patterns using grep
+grep "Failed password" /var/log/auth.log
+
+# Search recursively through all files in a directory
+grep -r "error" /var/log/
+
+# Cut specific columns from a file (e.g., get only usernames from /etc/passwd)
+cut -d: -f1 /etc/passwd
+
+# Sort output and count duplicates
+cat /var/log/access.log | cut -d' ' -f1 | sort | uniq -c | sort -nr  # Top IP addresses</code></pre>
+            </div>
+            <p><strong>Pro Tip:</strong> The pipe operator <code>|</code> is the secret to Linux power. It takes the output of the command on the left and sends it as input to the command on the right, allowing you to chain complex queries effortlessly.</p>
+
+            <h2 id="packages">Package Management</h2>
+            <p>Linux distributions are split into two major families: <strong>Debian-based</strong> (Ubuntu, Kali, Debian) which use <code>apt</code> and <code>dpkg</code>, and <strong>RPM-based</strong> (RedHat, CentOS, Fedora) which use <code>yum</code> or <code>dnf</code>. This guide focuses on Debian-based systems, which are the most common for cybersecurity.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">Software Management with APT</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code># Update the package list
+sudo apt update
+
+# Upgrade all installed packages
+sudo apt upgrade -y
+
+# Install a new package (e.g., nmap)
+sudo apt install nmap -y
+
+# Remove a package
+sudo apt remove nmap
+
+# Search for a package in the repository
+apt search "web server"
+
+# View detailed information about a package
+apt show nmap</code></pre>
+            </div>
+            <div class="callout callout-success">
+              <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+              <div>
+                <div class="callout-title">Pro Tip for Pen Testers</div>
+                <div class="callout-body">Always run <code>sudo apt update && sudo apt upgrade -y</code> on your Kali Linux environment before starting a penetration test to ensure you have the latest exploits and tools available.</div>
+              </div>
+            </div>
+
+            <h2 id="processes">Processes & System Monitoring</h2>
+            <p>When a system is compromised, malicious processes run in the background. You need to know how to find them and stop them.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">Monitor and Manage Running Processes</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code># List all running processes with detailed info
+ps aux
+
+# View processes in a hierarchical tree
+pstree
+
+# Interactive process viewer (press 'q' to quit)
+top
+# Or install htop for a better visual experience: sudo apt install htop
+
+# Find a specific process by name (e.g., Apache)
+ps aux | grep apache
+
+# Kill a process by its PID (Process ID)
+sudo kill -9 1234  # -9 forces an immediate kill
+
+# View system services status
+systemctl status ssh
+
+# Start/Stop/Restart a service
+sudo systemctl start ssh
+sudo systemctl enable ssh  # Enable to start on boot</code></pre>
+            </div>
+
+            <h2 id="users">Users & Groups</h2>
+            <p>Managing users, groups, and their privileges is essential for system security and compliance.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">User and Group Administration</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code># Add a new user
+sudo useradd -m -g users -s /bin/bash newuser
+
+# Set or change a user's password
+sudo passwd newuser
+
+# Add a user to a new group (e.g., sudo)
+sudo usermod -aG sudo newuser
+
+# Delete a user
+sudo userdel -r newuser
+
+# View all users on the system
+cat /etc/passwd
+
+# Switch to a different user context
+su - aimad
+
+# Execute a single command as root (super user)
+sudo whoami</code></pre>
+            </div>
+            <p>Privilege escalation is a major attack vector. Always ensure standard users have the least amount of privileges required. Use <code>sudo</code> sparingly and never give a user root-level access unless absolutely necessary.</p>
+
+            <h2 id="scripting">Bash Scripting for Automation</h2>
+            <p>Automation is a core skill for both system administrators and security professionals. Instead of manually typing 10 commands, you can put them in a script and run them all at once.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">Your First Bash Script</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code>#!/bin/bash
+# This is a simple backup script
+
+# Variables
+BACKUP_DIR="/backups"
+SOURCE_DIR="/var/www/html"
+DATE=$(date +%Y%m%d)
+
+# Create backup directory if it doesn't exist
+mkdir -p $BACKUP_DIR
+
+# Archive and compress the source directory
+tar -czf $BACKUP_DIR/backup_$DATE.tar.gz $SOURCE_DIR
+
+# Print success message
+echo "Backup completed successfully for $DATE"</code></pre>
+            </div>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">Loops, Conditions, and Cron</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code># Use an IF statement to check privileges
+if [ $USER == "root" ]; then
+    echo "You are running as root!"
+else
+    echo "Run this script with sudo."
+fi
+
+# FOR loop to process a list of IP addresses
+for ip in $(cat ip_list.txt); do
+    ping -c 1 $ip
+done
+
+# Schedule the script to run automatically using Cron (crontab -e)
+# Runs at 2 AM every day
+0 2 * * * /home/aimad/scripts/backup.sh</code></pre>
+            </div>
+
+            <h2 id="security">Linux Security Hardening</h2>
+            <p>Securing your Linux server is non-negotiable. Here are the fundamental steps you can take to protect a system from attack.</p>
+
+            <div class="code-block-wrap">
+              <span class="code-block-label">Basic System Hardening</span>
+              <button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+              <pre><code># 1. Enable and configure the firewall (UFW - Uncomplicated Firewall)
+sudo ufw enable
+sudo ufw allow 22/tcp  # Allow SSH explicitly
+sudo ufw allow 80/tcp  # Allow HTTP for web servers
+sudo ufw status
+
+# 2. Harden SSH configuration
+sudo nano /etc/ssh/sshd_config
+# Set: PermitRootLogin no
+# Set: PasswordAuthentication no (Use SSH keys instead)
+sudo systemctl restart sshd
+
+# 3. Generate a strong SSH key pair
+ssh-keygen -t ed25519 -C "aimad@secureserver"
+
+# 4. Audit open ports to ensure no unnecessary services are running
+sudo netstat -tulpn
+
+# 5. Configure automatic security updates
+sudo apt install unattended-upgrades
+sudo dpkg-reconfigure --priority=low unattended-upgrades</code></pre>
+            </div>
+            <div class="callout callout-danger">
+              <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+              <div>
+                <div class="callout-title">Critical SSH Hardening</div>
+                <div class="callout-body">On internet-facing servers, disabling root login (<code>PermitRootLogin no</code>) and using only SSH keys instead of passwords (<code>PasswordAuthentication no</code>) are the two most important settings. Brute-force SSH attacks are inevitable — these settings stop them dead.</div>
+              </div>
+            </div>
+
+            <h2 id="next-steps">Next Steps & Resources</h2>
+            <p>Mastering Linux is a journey, not a destination. Here are my recommended next steps after this guide:</p>
+            <ul>
+              <li><strong>Take the LPI Linux Essentials Exam (010-160):</strong> Validate your knowledge with the official certification. It is a great foundational stepping stone.</li>
+              <li><strong>Explore OverTheWire Bandit:</strong> An excellent wargame that teaches Linux CLI skills through puzzles. Highly recommended for hands-on practice.</li>
+              <li><strong>Build your own lab:</strong> Launch a virtual machine (Ubuntu Server or Kali) and practice the commands in this guide. Mess up, break things, and learn to fix them.</li>
+              <li><strong>Read my other guides:</strong> Check out my <a href="kali-linux-setup-guide.html">Kali Linux Setup Guide</a> and <a href="nmap-complete-guide.html">Nmap Deep Dive</a> to apply your new Linux skills to actual penetration testing.</li>
+            </ul>
+            <p>The terminal is your most powerful weapon in cybersecurity. Keep typing, keep learning, and stay curious.</p>
+
+          </div><!-- end article-body -->
+
+          <!-- Social Share -->
+          <div class="social-share" role="complementary" aria-label="Share this article">
+            <span class="share-label">Share:</span>
+            <button id="share-twitter" class="share-btn twitter" aria-label="Share on Twitter/X">
+              <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+            </button>
+            <button id="share-linkedin" class="share-btn linkedin" aria-label="Share on LinkedIn">
+              <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+            </button>
+            <button id="share-copy-url" class="share-btn copy-url" aria-label="Copy link">
+              <i class="fa-solid fa-link" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <!-- Article Navigation -->
+          <nav class="article-nav" aria-label="Article navigation">
+            <a href="../blog.html" class="article-nav-link prev">
+              <div class="article-nav-dir"><i class="fa-solid fa-arrow-left fa-xs" aria-hidden="true"></i> Back to Blog</div>
+              <div class="article-nav-title">All Articles</div>
+            </a>
+            <a href="nmap-complete-guide.html" class="article-nav-link next">
+              <div class="article-nav-dir">Next Article <i class="fa-solid fa-arrow-right fa-xs" aria-hidden="true"></i></div>
+              <div class="article-nav-title">Nmap Deep Dive: From Port Scanning to Full Network Enumeration</div>
+            </a>
+          </nav>
+
+          <!-- Comments Placeholder -->
+          <div class="comments-wrap">
+            <div class="comments-icon" aria-hidden="true"><i class="fa-regular fa-comments"></i></div>
+            <h3 class="comments-title">Discussion</h3>
+            <p class="comments-desc">Comments coming soon. For now, reach out on <a href="https://linkedin.com/in/aimadulislam" target="_blank" rel="noopener">LinkedIn</a> or <a href="mailto:info@aimadulislam.dpdns.org">email me</a> with questions.</p>
+          </div>
+
+        </article>
+
+        <!-- Article Sidebar -->
+        <aside class="sidebar" aria-label="Article sidebar">
+
+          <!-- Author -->
+          <div class="sidebar-widget card">
+            <div class="card-glow"></div>
+            <div class="widget-title"><i class="fa-solid fa-user" aria-hidden="true"></i> Author</div>
+            <div style="display:flex;gap:0.85rem;align-items:center;margin-bottom:0.85rem;">
+              <img src="https://i.postimg.cc/hPyNdGVF/Whats-App-Image-2026-07-05-at-9-35-59-PM.jpg"
+                   alt="Aimad Ul Islam"
+                   style="width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid var(--border2);"
+                   loading="lazy"
+                   onerror="this.src='https://ui-avatars.com/api/?name=Aimad&background=0A1628&color=00D4FF&size=50'"/>
+              <div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-size:0.9rem;font-weight:600;">Aimad Ul Islam</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--muted);">Ethical Hacker | DFIR</div>
+              </div>
+            </div>
+            <p style="color:var(--muted);font-size:0.78rem;line-height:1.6;margin-bottom:0.85rem;">Cisco Ethical Hacker Certified. Blue Cape DFIR Certified. BSc CS, University of Peshawar.</p>
+            <a href="../index.html" class="btn btn-outline" style="width:100%;justify-content:center;font-size:0.68rem;">View Portfolio</a>
+          </div>
+
+          <!-- Related Articles -->
+          <div class="sidebar-widget card">
+            <div class="card-glow"></div>
+            <div class="widget-title"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Related Articles</div>
+            <a href="kali-linux-setup-guide.html" class="sidebar-post">
+              <div class="sidebar-post-thumb">🐉</div>
+              <div>
+                <div class="sidebar-post-title">Getting Started with Kali Linux</div>
+                <div class="sidebar-post-meta">12 min · Linux</div>
+              </div>
+            </a>
+            <a href="nmap-complete-guide.html" class="sidebar-post">
+              <div class="sidebar-post-thumb">🗺️</div>
+              <div>
+                <div class="sidebar-post-title">Nmap Deep Dive: Complete Guide</div>
+                <div class="sidebar-post-meta">15 min · Cybersecurity</div>
+              </div>
+            </a>
+            <a href="home-lab-setup.html" class="sidebar-post">
+              <div class="sidebar-post-thumb">🏠</div>
+              <div>
+                <div class="sidebar-post-title">Home Lab on a Budget</div>
+                <div class="sidebar-post-meta">10 min · Tutorials</div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Tags -->
+          <div class="sidebar-widget card">
+            <div class="card-glow"></div>
+            <div class="widget-title"><i class="fa-solid fa-tags" aria-hidden="true"></i> Tags</div>
+            <div class="tags-cloud">
+              <span class="tag tag-linux">linux</span>
+              <span class="tag tag-tut">bash</span>
+              <span class="tag tag-tut">command-line</span>
+              <span class="tag tag-tut">permissions</span>
+              <span class="tag tag-tut">scripting</span>
+              <span class="tag tag-tut">lpi</span>
+            </div>
+          </div>
+
+          <!-- Newsletter -->
+          <div class="sidebar-widget card">
+            <div class="card-glow"></div>
+            <div class="widget-title"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Newsletter</div>
+            <p style="color:var(--muted);font-size:0.78rem;line-height:1.6;margin-bottom:1rem;">Get new posts delivered to your inbox.</p>
+            <form class="newsletter-form newsletter-form-handler" novalidate>
+              <input type="email" class="newsletter-input" placeholder="your@email.com" aria-label="Email address" required/>
+              <button type="submit" class="newsletter-btn">Subscribe</button>
+              <p class="newsletter-note">No spam · Free forever</p>
+            </form>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="blog-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">[Aimad<span>.</span>Blog]</div>
+        <p class="footer-tagline">Cybersecurity student from Peshawar documenting his learning journey — one post at a time.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Blog</h4>
+        <a href="../blog.html">All Posts</a>
+        <a href="../blog.html?cat=Cybersecurity">Cybersecurity</a>
+        <a href="../blog.html?cat=Linux">Linux</a>
+        <a href="../blog.html?cat=Tutorials">Tutorials</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="https://linkedin.com/in/aimadulislam" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in fa-xs"></i> LinkedIn</a>
+        <a href="https://github.com/Aimadulislam" target="_blank" rel="noopener"><i class="fa-brands fa-github fa-xs"></i> GitHub</a>
+        <a href="mailto:info@aimadulislam.dpdns.org"><i class="fa-solid fa-envelope fa-xs"></i> Email</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Aimad Ul Islam</span>
+      <div class="footer-socs">
+        <a href="https://linkedin.com/in/aimadulislam" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://github.com/Aimadulislam" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll to Top -->
+<button id="scroll-top" aria-label="Scroll to top"><i class="fa-solid fa-chevron-up fa-xs" aria-hidden="true"></i></button>
+
+<script src="../js/blog.js"></script>
+</body>
+</html>
