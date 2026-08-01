@@ -156,6 +156,24 @@ const BLOG_POSTS = [
     imageAlt: "Python code injecting a DLL into a remote process",
     emoji: "🐉",
   },
+     {
+    id: 9,
+    title: "Educational Keylogger: How Keyboard Monitoring Works & Defenses",
+    subtitle: "A deep dive into the mechanics of keyloggers, storage methods, and defensive strategies—strictly for educational purposes.",
+    excerpt: "Learn how keyloggers intercept keystrokes, buffer data, and exfiltrate logs via USB or cloud storage. Includes transparent Python code for cybersecurity education.",
+    slug: "educational-keylogger-guide",
+    file: "posts/educational-keylogger-guide.html",
+    category: ["Cybersecurity", "Programming", "Tutorials"],
+    tags: ["keylogger", "pynput", "ethical-hacking", "defenses", "cybersecurity-education", "python"],
+    author: "Aimad Ul Islam",
+    date: "2026-08-02",
+    updated: "2026-08-02",
+    readingTime: 21,
+    featured: false,
+    image: "",
+    imageAlt: "Educational cybersecurity keylogger demonstration",
+    emoji: "🎹",
+  },
 ];
 
 /* ── CONFIG ──────────────────────────────────────────────────────────────── */
